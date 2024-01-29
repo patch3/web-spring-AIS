@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Your Website</title>
+</head>
+<body>
+
+<header>
+    <h1>Smart Bank</h1>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Credits</a>
+    <div class="right-nav">
+        <a href="#">Profile</a>
+    </div>
+</nav>
+
+<div class="content">
+    <fieldset>
+        <legend>Client:</legend>
+        <form class="generated-form" method="POST" action="/login/auth/process" enctype="multipart/form-data">
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password"><br>
+            <a href="/login/reg">Registration</a><br>
+            <input type="submit" value="Registration"><br><br>
+        </form>
+    </fieldset>
+</div>
+
+</body>
+</html>

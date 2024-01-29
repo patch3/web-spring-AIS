@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Smart Bank</h1>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Credits</a>
+    <div class="right-nav">
+        <a href="#">Profile</a>
+    </div>
+</nav>
+
+<div class="content">
+    <fieldset>
+        <legend>Client:</legend>
+        <form class="generated-form" method="POST" action="/login/reg/process" enctype="multipart/form-data">
+            <label for="fullName">Full name:</label><br>
+            <input type="text" id="fullName" name="fullName"><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password"><br>
+            <label for="repeat_password">Repeat password</label><br>
+            <input type="password" id="repeat_password" name="repeatPassword"><br>
+            <label for="passportPhoto">Passport photo:</label><br>
+            <input type="file" id="passportPhoto" name="passportPhoto"><br><br>
+            <!--<a href="/login/auth">Authorization</a><br>-->
+            <!--<input type="submit" value="Registration"><br><br>-->
+            <button>Registration</button><br><br>
+        </form>
+    </fieldset>
+</div>
+</body>
+</html>

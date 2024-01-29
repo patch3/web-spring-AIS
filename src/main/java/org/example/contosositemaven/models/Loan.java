@@ -1,0 +1,81 @@
+package org.example.contosositemaven.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import javax.persistence.*;
+import java.util.Set;
+
+import java.util.Set;
+
+@Entity
+@Table(name = "loan")
+@EnableJpaRepositories
+public class Loan extends Creditor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "name", nullable = false)
+    private String name;
+    @Column(name = "description", nullable = false)
+    private String description;
+    @Column(name = "interest_rate", nullable = false)
+    private double interestRate;
+    @Column(name = "loan_term", nullable = false)
+    private double loanTerm;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loan")
+    private Set<LoanRequestHistory> loanRequestHistory;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loan")
+    private Set<LoanRepaymentHistory> loanRepaymentHistories;
+
+    public Loan() {
+    }
+
+    public Loan(
+            String name,
+            String description,
+            double interestRate,
+            double loanTerm
+    ) {
+        this.name = name;
+        this.description = description;
+        this.interestRate = interestRate;
+        this.loanTerm = loanTerm;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public double getLoanTerm() {
+        return loanTerm;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public void setLoanTerm(double loanTerm) {
+        this.loanTerm = loanTerm;
+    }
+}
