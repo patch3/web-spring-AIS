@@ -1,7 +1,8 @@
 package org.example.contosositemaven.controllers.login;
 
+import org.example.contosositemaven.dto.client.ClientRegistrationDTO;
 import org.example.contosositemaven.models.Client;
-import org.example.contosositemaven.repositorys.ClientsRepository;
+import org.example.contosositemaven.repositorys.ClientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -19,12 +19,12 @@ public class RegController {
 
     private static final Logger logger = LoggerFactory.getLogger(RegController.class);
 
-    private final ClientsRepository clientsRepository;
+    private final ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegController(ClientsRepository clientsRepository, PasswordEncoder passwordEncoder) {
-        this.clientsRepository = clientsRepository;
+    public RegController(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
+        this.clientRepository = clientRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -36,22 +36,24 @@ public class RegController {
 
     @PostMapping("/process")
     public String processRegistration(
-            @RequestParam(name="fullName") String fullName,
-            @RequestParam(name="email") String email,
-            @RequestParam(name="password") String password,
-            @RequestParam(name="repeatPassword") String repeatPassword,
-            @RequestParam(name="passportPhoto") MultipartFile passportPhoto,
+            @ModelAttribute("client") ClientRegistrationDTO clientRegistrationDTO,
             Model model
     ){
-        if (!password.equals(repeatPassword)) {
+        if (!clientRegistrationDTO.passwordIsEquals()) {
             model.addAttribute("error", "Password do not match");
         }
         try {
-            byte[] photoBytes = passportPhoto.getBytes();
-            // Хеширование пароля
-            String hashedPassword = passwordEncoder.encode(password);
+            byte[] photoBytes = clientRegistrationDTO.getPassportPhoto().getBytes();
 
-            clientsRepository.save(new Client(fullName, email, false, photoBytes, hashedPassword));
+            clientRepository.save(
+                    new Client(
+                            clientRegistrationDTO.getFullName(),
+                            clientRegistrationDTO.getEmail(),
+                            false,
+                            photoBytes,
+                            clientRegistrationDTO.getPasswordHash()
+                    )
+            );
 
             model.addAttribute("message", "Registration success!");
             return "redirect:/home";

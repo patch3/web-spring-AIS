@@ -1,35 +1,28 @@
 package org.example.contosositemaven.controllers.login;
 
 
-import org.example.contosositemaven.models.Client;
-import org.example.contosositemaven.models.Creditor;
-import org.example.contosositemaven.repositorys.ClientsRepository;
-import org.example.contosositemaven.repositorys.CreditorsRepository;
+import org.example.contosositemaven.repositorys.ClientRepository;
+import org.example.contosositemaven.repositorys.CreditorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/login/auth")
 public class AuthController {
 
-    private final ClientsRepository clientsRepository;
+    private final ClientRepository clientRepository;
 
-    private final CreditorsRepository creditorRepository;
+    private final CreditorRepository creditorRepository;
     private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public AuthController(ClientsRepository clientsRepository, CreditorsRepository creditorRepository, PasswordEncoder passwordEncoder) {
-        this.clientsRepository = clientsRepository;
+    public AuthController(ClientRepository clientRepository, CreditorRepository creditorRepository, PasswordEncoder passwordEncoder) {
+        this.clientRepository = clientRepository;
         this.creditorRepository = creditorRepository;
         this.passwordEncoder = passwordEncoder;
     }

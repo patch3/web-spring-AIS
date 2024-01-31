@@ -2,6 +2,7 @@ package org.example.contosositemaven.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;

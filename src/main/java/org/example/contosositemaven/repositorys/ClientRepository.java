@@ -1,13 +1,12 @@
 package org.example.contosositemaven.repositorys;
 
-import org.example.contosositemaven.models.Creditor;
+import org.example.contosositemaven.models.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CreditorsRepository extends JpaRepository<Creditor, Long> {
-    Optional<Creditor> findByEmail(String email);
-
+public interface ClientRepository extends JpaRepository<Client, Long> {
+    Optional<Client> findByEmail(String email);
 }

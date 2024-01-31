@@ -1,25 +1,34 @@
-package org.example.contosositemaven.dto;
+package org.example.contosositemaven.dto.client;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
 
 public class ClientDTO {
-    private Long id;
-    private String fullName;
-    private String email;
-    private boolean confirmedAccount;
-    private byte[] passportPhoto;
-    private String passwordHash;
+    protected Long id;
+    protected String fullName;
+    protected String email;
+    protected boolean confirmedAccount;
+    protected MultipartFile passportPhoto;
+    protected String password;
+    @Qualifier("passwordEncoder")
+    private PasswordEncoder passwordEncoder;
 
     public ClientDTO(Long id,
                      String fullName,
                      String email,
                      boolean confirmedAccount,
-                     byte[] passportPhoto,
-                     String passwordHash) {
+                     MultipartFile passportPhoto,
+                     String password) throws IOException {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.confirmedAccount = confirmedAccount;
         this.passportPhoto = passportPhoto;
-        this.passwordHash = passwordHash;
+        this.password = password;
     }
 
     public Long getId() {
@@ -37,12 +46,15 @@ public class ClientDTO {
         return confirmedAccount;
     }
 
-    public byte[] getPassportPhoto() {
+    public MultipartFile getPassportPhoto() {
         return passportPhoto;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
+    }
+    public String getPasswordHash(){
+        return passwordEncoder.encode(password);
     }
 
     public void setId(Long id) {
@@ -60,11 +72,11 @@ public class ClientDTO {
         this.confirmedAccount = confirmedAccount;
     }
 
-    public void setPassportPhoto(byte[] passportPhoto) {
+    public void setPassportPhoto(MultipartFile passportPhoto) {
         this.passportPhoto = passportPhoto;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String passwordHash) {
+        this.password = passwordHash;
     }
 }
