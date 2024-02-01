@@ -1,8 +1,13 @@
 package org.example.contosositemaven.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
+
+@Getter
+@Setter
 
 @Entity
 @EnableJpaRepositories
@@ -23,29 +28,5 @@ public class Creditor {
     public Creditor(String workEmail, String passwordHash) {
         this.email = workEmail;
         this.passwordHash = passwordHash;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setEmail(String workEmail) {
-        this.email = workEmail;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

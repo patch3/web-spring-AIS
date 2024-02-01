@@ -1,9 +1,14 @@
 package org.example.contosositemaven.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Date;
 import javax.persistence.*;
+
+@Getter
+@Setter
 
 @Entity
 @Table(name = "loan_repayment_history")
@@ -30,30 +35,6 @@ public class LoanRepaymentHistory {
     public LoanRepaymentHistory(Client client, Loan loan, Date repaymentData) {
         this.client = client;
         this.loan = loan;
-        this.repaymentData = repaymentData;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public Loan getLoan() {
-        return loan;
-    }
-
-    public Date getRepaymentData() {
-        return repaymentData;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public void setLoan(Loan loan) {
-        this.loan = loan;
-    }
-
-    public void setRepaymentData(Date repaymentData) {
         this.repaymentData = repaymentData;
     }
 }

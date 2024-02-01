@@ -1,22 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+<head th:include="blocks/standart-sample :: head" ></head>
 <body>
-<header>
-    <h1>Smart Bank</h1>
-</header>
 
-<nav>
-    <a href="#">Home</a>
-    <a href="#">Credits</a>
-    <div class="right-nav">
-        <a href="#">Profile</a>
-    </div>
-</nav>
+
+<header th:include="blocks/standart-sample :: header"></header>
+<nav th:include="blocks/standart-sample :: nav"></nav>
+
 
 <div class="content">
     <fieldset>
@@ -32,7 +22,7 @@
             <input type="password" id="repeat_password" name="repeatPassword"><br>
             <label for="passportPhoto">Passport photo:</label><br>
             <input type="file" id="passportPhoto" name="passportPhoto"><br><br>
-            <!--<a href="/login/auth">Authorization</a><br>-->
+            <a th:href="@{/login/auth}">authorization</a><br>
             <!--<input type="submit" value="Registration"><br><br>-->
             <button>Registration</button><br><br>
         </form>

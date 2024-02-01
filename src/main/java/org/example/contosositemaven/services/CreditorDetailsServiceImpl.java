@@ -1,5 +1,6 @@
 package org.example.contosositemaven.services;
 
+import org.example.contosositemaven.config.constants.RoleConst;
 import org.example.contosositemaven.models.Creditor;
 import org.example.contosositemaven.repositorys.CreditorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class CreditorDetailsServiceImpl implements UserDetailsService {
         return User
                 .withUsername(creditor.getEmail())
                 .password(creditor.getPasswordHash())
-                .roles("EMPLOYEE")
+                .roles(RoleConst.ADMIN)
                 .build();
     }
 }

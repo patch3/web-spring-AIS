@@ -1,33 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+<head th:include="blocks/standart-sample :: head" ></head>
 <body>
 
+<header th:include="blocks/standart-sample :: header"></header>
+<nav th:include="blocks/standart-sample :: nav"></nav>
 
-<header>
-    <h1>Smart Bank</h1>
-</header>
-
-<nav>
-    <a href="#">Home</a>
-    <a href="#">Credits</a>
-    <div class="right-nav">
-        <th:block th:if="${username}">
-            <p>Hello, <span th:text="${username}"></span>!</p>
-        </th:block>
-
-        <th:block th:unless="${username}">
-            <a href="/login/reg" th:href="@{/login/reg}">Register</a>
-        </th:block>
-    </div>
-</nav>
 
 <div class="content">
-    <!-- Ваш контент здесь -->
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 </div>
 

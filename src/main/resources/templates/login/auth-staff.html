@@ -9,16 +9,14 @@
 
 <div class="content">
     <fieldset>
-        <legend>Client:</legend>
-        <form class="generated-form" method="POST" th:action="@{/login/auth/process}" enctype="multipart/form-data">
+        <legend>Staff:</legend>
+        <form class="generated-form" method="POST" th:action="@{/staff/login/auth/process}" enctype="multipart/form-data">
             <label for="email">Email:</label><br>
             <input type="email" id="email" name="email"><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password"><br>
 
-            <a th:href="@{/login/reg}">registration</a><br>
-            <a th:href="@{/staff/login/auth}">auth for staff</a><br>
-
+            <a th:href="@{/login/auth}">auth for client</a><br>
 
             <button>authenticate</button><br><br>
         </form>

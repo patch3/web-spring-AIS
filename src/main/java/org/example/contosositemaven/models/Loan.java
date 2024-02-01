@@ -1,11 +1,17 @@
 package org.example.contosositemaven.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import javax.persistence.*;
 import java.util.Set;
 
 import java.util.Set;
+
+
+@Getter
+@Setter
 
 @Entity
 @Table(name = "loan")
@@ -44,38 +50,6 @@ public class Loan extends Creditor {
         this.name = name;
         this.description = description;
         this.interestRate = interestRate;
-        this.loanTerm = loanTerm;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public double getInterestRate() {
-        return interestRate;
-    }
-
-    public double getLoanTerm() {
-        return loanTerm;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setInterestRate(double interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public void setLoanTerm(double loanTerm) {
         this.loanTerm = loanTerm;
     }
 }

@@ -1,15 +1,11 @@
-package org.example.contosositemaven.config.securingweb;
+package org.example.contosositemaven.config.security;
 
-import org.example.contosositemaven.services.ClientDetailsServiceImpl;
-import org.example.contosositemaven.services.CreditorDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
@@ -82,23 +78,23 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests((requests) -> requests
                     .requestMatchers("/", "/home").permitAll()
-                    .requestMatchers(
-                            "/login/reg","/login/profile",
-                            "/login/auth", "/login/auth/admin"
-                    ).anonymous()
                     .anyRequest().authenticated()
             )
             .formLogin((form) -> form
-                    .loginPage("/login/auth")
-                    .permitAll()
                     .defaultSuccessUrl("/profile")
             )
             .logout((logout) -> logout
                     .logoutSuccessUrl("/logout")
                     .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .deleteCookies("JSESSIONID")
                     .permitAll()
             )
-                .csrf().disable();
+        .exceptionHandling((httpSecurityExceptionHandlingConfigurer) -> httpSecurityExceptionHandlingConfigurer
+                .accessDeniedPage("/403")
+        )
+        .csrf().disable();
 
         //.csrf(Customizer.withDefaults());
         return http.build();

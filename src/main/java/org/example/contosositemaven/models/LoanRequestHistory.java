@@ -1,9 +1,14 @@
 package org.example.contosositemaven.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Date;
 import javax.persistence.*;
+
+@Getter
+@Setter
 
 @Entity
 @Table(name="loan_request_history")
@@ -36,38 +41,6 @@ public class LoanRequestHistory {
     ) {
         this.client = client;
         this.loan = loan;
-        this.dataTime = dataTime;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public Loan getLoan() {
-        return loan;
-    }
-
-    public Date getDataTime() {
-        return dataTime;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public void setLoan(Loan loan) {
-        this.loan = loan;
-    }
-
-    public void setDataTime(Date dataTime) {
         this.dataTime = dataTime;
     }
 }

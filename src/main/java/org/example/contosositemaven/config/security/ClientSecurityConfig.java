@@ -1,4 +1,4 @@
-package org.example.contosositemaven.config.securingweb;
+package org.example.contosositemaven.config.security;
 
 import org.example.contosositemaven.services.ClientDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,21 +34,20 @@ public class ClientSecurityConfig {
     public SecurityFilterChain clientFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/login/auth").anonymous()
-                    .requestMatchers("/login/auth","/login/reg","/login/reg/*").anonymous()
-                    .anyRequest().authenticated()
+                    .requestMatchers(
+                            "/login/auth",
+                            "/login/reg",
+                            "/login/reg/*"
+                    ).anonymous()
+                    .requestMatchers(
+                            "/profile"
+                    ).authenticated()
             ).formLogin((form) -> form
                     .loginPage("/login/auth").permitAll()
                     .defaultSuccessUrl("/profile")
+                    .loginProcessingUrl("/login/auth/process")
                     .permitAll()
-            ).logout((logout) -> logout
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true)
-                    .clearAuthentication(true)
-                    .permitAll()
-            ).exceptionHandling()
-                .accessDeniedPage("/access-denied");
+            );
         return http.build();
     }
 }

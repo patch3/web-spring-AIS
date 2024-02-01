@@ -1,12 +1,18 @@
 package org.example.contosositemaven.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;
 import java.util.Set;
+
+@Getter
+@Setter
 
 @Entity
 @EnableJpaRepositories
@@ -44,65 +50,11 @@ public class Client {
     public Client() {
     }
 
-    public Client(
-            String fullName,
-            String email,
-            boolean confirmedAccount,
-            byte[] passportPhoto,
-            String passwordHash
-    ) {
+    public Client(String fullName, String email, boolean confirmedAccount, byte[] passportPhoto, String passwordHash) {
         this.fullName = fullName;
         this.email = email;
         this.confirmedAccount = confirmedAccount;
         this.passportPhoto = passportPhoto;
-        this.passwordHash = passwordHash;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public boolean isConfirmedAccount() {
-        return confirmedAccount;
-    }
-
-    public byte[] getPassportPhoto() {
-        return passportPhoto;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setConfirmedAccount(boolean confirmedAccount) {
-        this.confirmedAccount = confirmedAccount;
-    }
-
-    public void setPassportPhoto(byte[] passportPhoto) {
-        this.passportPhoto = passportPhoto;
-    }
-
-    public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
 }

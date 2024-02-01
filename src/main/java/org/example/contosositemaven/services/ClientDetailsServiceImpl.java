@@ -1,5 +1,6 @@
 package org.example.contosositemaven.services;
 
+import org.example.contosositemaven.config.constants.RoleConst;
 import org.example.contosositemaven.models.Client;
 import org.example.contosositemaven.repositorys.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ClientDetailsServiceImpl implements UserDetailsService {
         return User
                 .withUsername(client.getEmail())
                 .password(client.getPasswordHash())
-                .roles("USER")
+                .roles(RoleConst.USER)
                 .build();
     }
 
