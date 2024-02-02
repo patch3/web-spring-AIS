@@ -11,17 +11,20 @@
 <div class="content">
     <fieldset>
         <legend>Client:</legend>
-        <form class="generated-form" method="POST" action="/login/reg/process" enctype="multipart/form-data">
+        <form class="generated-form" method="POST"
+              action="/login/reg/process" enctype="multipart/form-data"
+              th:object="${client}"
+        >
             <label for="fullName">Full name:</label><br>
-            <input type="text" id="fullName" name="fullName"><br>
+            <input type="text" id="fullName" th:field="*{fullName}" autofocus="autofocus"><br>
             <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email"><br>
+            <input type="email" id="email" th:field="*{email}"><br>
             <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password"><br>
+            <input type="password" id="password" th:field="*{password}"><br>
             <label for="repeat_password">Repeat password</label><br>
-            <input type="password" id="repeat_password" name="repeatPassword"><br>
+            <input type="password" id="repeat_password" th:field="*{repeatPassword}"><br>
             <label for="passportPhoto">Passport photo:</label><br>
-            <input type="file" id="passportPhoto" name="passportPhoto"><br><br>
+            <input type="file" id="passportPhoto" th:field="*{passportPhoto}"><br><br>
             <a th:href="@{/login/auth}">authorization</a><br>
             <!--<input type="submit" value="Registration"><br><br>-->
             <button>Registration</button><br><br>
