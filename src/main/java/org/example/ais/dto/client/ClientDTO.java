@@ -3,9 +3,11 @@ package org.example.ais.dto.client;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
+@Component
 public class ClientDTO {
 
     protected String fullName;
@@ -20,19 +22,6 @@ public class ClientDTO {
 
     @Qualifier("passwordEncoder")
     private PasswordEncoder passwordEncoder;
-
-/*    public ClientDTO(String fullName,
-                     String email,
-                     boolean confirmedAccount,
-                     MultipartFile passportPhoto,
-                     String password) throws IOException {
-        this.fullName = fullName;
-        this.email = email;
-        this.confirmedAccount = confirmedAccount;
-        this.passportPhoto = passportPhoto;
-        this.password = password;
-    }*/
-
 
     public String getPasswordHash(){
         return passwordEncoder.encode(password);

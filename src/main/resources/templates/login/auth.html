@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="blocks/standart-sample :: head" ></head>
+<head th:replace="~{blocks/standart-sample :: head}"></head>
 <body>
 
 
-<header th:include="blocks/standart-sample :: header"></header>
-<nav th:include="blocks/standart-sample :: nav"></nav>
+<header th:replace="~{blocks/standart-sample :: header}"></header>
+<nav th:replace="~{blocks/standart-sample :: nav}"></nav>
 
 <div class="content">
     <fieldset>
         <legend>Client:</legend>
-        <form class="generated-form" method="POST" th:action="@{/login/auth/process}" enctype="multipart/form-data">
+        <form class="generated-form" method="POST"
+              th:action="@{/login/auth/process}" enctype="multipart/form-data">
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email"><br>
+            <input id="email" name="username" type="email"><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password"><br>
-
             <a th:href="@{/login/reg}">registration</a><br>
-            <a th:href="@{/staff/login/auth}">auth for staff</a><br>
+            <a th:href="@{/login/auth/staff}">auth for staff</a><br>
 
 
             <button>authenticate</button><br><br>

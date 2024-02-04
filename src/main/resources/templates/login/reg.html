@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="blocks/standart-sample :: head" ></head>
+<head th:replace="~{blocks/standart-sample :: head}"></head>
 <body>
 
 
-<header th:include="blocks/standart-sample :: header"></header>
-<nav th:include="blocks/standart-sample :: nav"></nav>
+<header th:replace="~{blocks/standart-sample :: header}"></header>
+<nav th:replace="~{blocks/standart-sample :: nav}"></nav>
 
 
 <div class="content">
     <fieldset>
         <legend>Client:</legend>
         <form class="generated-form" method="POST"
-              action="/login/reg/process" enctype="multipart/form-data"
+              th:action="@{/login/reg/process}" enctype="multipart/form-data"
               th:object="${client}"
         >
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <label for="fullName">Full name:</label><br>
             <input type="text" id="fullName" th:field="*{fullName}" autofocus="autofocus"><br>
             <label for="email">Email:</label><br>
             <input type="email" id="email" th:field="*{email}"><br>
+            <label for="passportPhoto">Passport photo:</label><br>
+            <input type="file" id="passportPhoto" th:field="*{passportPhoto}"><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" th:field="*{password}"><br>
             <label for="repeat_password">Repeat password</label><br>
             <input type="password" id="repeat_password" th:field="*{repeatPassword}"><br>
-            <label for="passportPhoto">Passport photo:</label><br>
-            <input type="file" id="passportPhoto" th:field="*{passportPhoto}"><br><br>
+            <br>
             <a th:href="@{/login/auth}">authorization</a><br>
             <!--<input type="submit" value="Registration"><br><br>-->
-            <button>Registration</button><br><br>
+            <button type="submit">Registration</button><br><br>
         </form>
     </fieldset>
 </div>

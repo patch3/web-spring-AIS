@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="blocks/standart-sample :: head" ></head>
+<head th:replace="~{blocks/standart-sample :: head}"></head>
 <body>
 
-<header th:include="blocks/standart-sample :: header"></header>
-<nav th:include="blocks/standart-sample :: nav"></nav>
+<header th:replace="~{blocks/standart-sample :: header}"></header>
+<nav th:replace="~{blocks/standart-sample :: nav}"></nav>
 
 
 <div class="content">

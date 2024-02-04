@@ -5,15 +5,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.ais.dto.client.ClientDTO;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.sql.Blob;
 import java.util.Set;
 
 @Getter
 @Setter
 
 @Entity
+@Component
 @EnableJpaRepositories
 @Table(name = "client")
 public class Client {
@@ -31,11 +36,14 @@ public class Client {
     @Column(name = "confirmed_account", nullable = false)
     private boolean confirmedAccount;
 
-    @Column(name = "passport_photo", nullable = false)
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "passport_photo",  columnDefinition="longblob", nullable = false)
     private byte[] passportPhoto;
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
+
 
 
     @JsonIgnore

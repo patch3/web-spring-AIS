@@ -8,19 +8,20 @@ import lombok.EqualsAndHashCode;
 public final class ClientRegistrationDTO extends ClientDTO{
     private String repeatPassword;
 
-/*    public ClientRegistrationDTO(
-            String fullName,
-            String email,
-            boolean confirmedAccount,
-            MultipartFile passportPhoto,
-            String password,
-            String repeatPassword
-    ) throws IOException {
-        super(fullName, email, confirmedAccount, passportPhoto, password);
-        this.repeatPassword = repeatPassword;
-    }*/
+    /*
+        public ClientRegistrationDTO(
+                String fullName,
+                String email,
+                boolean confirmedAccount,
+                MultipartFile passportPhoto,
+                String password,
+                String repeatPassword
+        ) throws IOException {
+            super(fullName, email, confirmedAccount, passportPhoto, password);
+            this.repeatPassword = repeatPassword;
+        }
+        */
     public boolean passwordIsEquals(){
         return super.password.equals(this.repeatPassword);
     }
-
 }

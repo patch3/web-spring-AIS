@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProfileController {
     @GetMapping
     public String showProfilePage(Model model) {
+        model.addAttribute("pageName", "Profile");
         return "/profile";
     }
 }
