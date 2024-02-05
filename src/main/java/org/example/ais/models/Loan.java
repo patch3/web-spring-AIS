@@ -13,8 +13,8 @@ import java.util.Set;
 @Setter
 
 @Entity
-@Table(name = "loan")
 @EnableJpaRepositories
+@Table(name = "loan")
 public class Loan extends Creditor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

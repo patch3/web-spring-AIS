@@ -2,6 +2,7 @@ package org.example.ais.controllers.login;
 
 import org.example.ais.dto.client.ClientRegistrationDTO;
 import org.example.ais.services.client.ClientDetailService;
+import org.example.ais.services.client.ClientDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ public class RegController {
     public RegController(ClientDetailService clientDetailService) {
         this.clientDetailService = clientDetailService;
     }
+
 
     @GetMapping
     public String showRegistrationPage(Model model) {

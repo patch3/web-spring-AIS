@@ -1,5 +1,6 @@
 package org.example.ais.services.client;
 
+import org.example.ais.dto.client.ClientDTO;
 import org.example.ais.dto.client.ClientRegistrationDTO;
 import org.example.ais.models.Client;
 import org.example.ais.repositorys.ClientRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,10 +19,13 @@ import java.io.IOException;
 @Lazy
 public final class ClientDetailsServiceImpl implements ClientDetailService {
     private final ClientRepository clientRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public ClientDetailsServiceImpl(ClientRepository clientRepository) {
+    public ClientDetailsServiceImpl(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -31,7 +36,15 @@ public final class ClientDetailsServiceImpl implements ClientDetailService {
     }
 
     @Override
-    public void save(ClientRegistrationDTO clientDTO) throws IOException {
-        clientRepository.save(new Client(clientDTO));
+    public void save(ClientDTO clientDTO) throws IOException {
+        clientRepository.save(
+                new Client(
+                    clientDTO.getFullName(),
+                    clientDTO.getEmail(),
+                    false,
+                    clientDTO.getPassportPhoto().getBytes(),
+                    passwordEncoder.encode(clientDTO.getPassword())
+                )
+        );
     }
 }

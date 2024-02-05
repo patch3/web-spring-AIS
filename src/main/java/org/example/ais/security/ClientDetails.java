@@ -43,6 +43,7 @@ public record ClientDetails(Client client) implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return client.isConfirmedAccount();
+        //return client.isConfirmedAccount();
+        return true;
     }
 }

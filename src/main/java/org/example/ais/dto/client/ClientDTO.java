@@ -19,11 +19,4 @@ public class ClientDTO {
     protected MultipartFile passportPhoto;
 
     protected String password;
-
-    @Qualifier("passwordEncoder")
-    private PasswordEncoder passwordEncoder;
-
-    public String getPasswordHash(){
-        return passwordEncoder.encode(password);
-    }
 }

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -51,14 +52,7 @@ public class SecurityConfig {
             managerBuilder.userDetailsService(creditorDetailsService).passwordEncoder(passwordEncoder);
         }
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-            http
-                .csrf((csrf) -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                );
-            return http.build();
-        }
+
 
         @Bean
         public SecurityFilterChain creditorFilterChain(HttpSecurity http) throws Exception {
@@ -79,6 +73,10 @@ public class SecurityConfig {
                                     .logoutUrl("/logout")
                                     .logoutSuccessUrl("/logout/staff/process")
                                     .deleteCookies("JSESSIONID")
+                    ).csrf(
+                        //Customizer.withDefaults()
+                            (csrf) -> csrf
+                            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     ).exceptionHandling(
                             (exception) -> exception
                                     .accessDeniedPage("/403")
@@ -119,13 +117,16 @@ public class SecurityConfig {
                             (form) -> form
                                     .loginPage("/login/auth")
                                     .loginProcessingUrl("/login/auth/process")
-                                    .failureUrl("/login/auth")
+                                    .failureUrl("/login/auth?error")
                                     .defaultSuccessUrl("/profile")
                     ).logout(
                             (logout) -> logout
                                     .logoutUrl("/logout")
                                     .logoutSuccessUrl("/logout/client/process")
                                     .deleteCookies("JSESSIONID")
+                    ).csrf(//Customizer.withDefaults()
+                            (csrf) -> csrf
+                                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     ).exceptionHandling(
                             (exception) -> exception
                                     .accessDeniedPage("/403")

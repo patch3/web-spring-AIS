@@ -1,4 +1,4 @@
-package org.example.ais.controllers.login;
+package org.example.ais.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

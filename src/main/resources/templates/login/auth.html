@@ -10,6 +10,13 @@
 <div class="content">
     <fieldset>
         <legend>Client:</legend>
+        <div th:if="${errorMessage}" class="errorMessage">
+            <fieldset>
+                <legend>ERROR:</legend>
+                <p th:text="${errorMessage}"></p>
+            </fieldset>
+        </div>
+
         <form class="generated-form" method="POST"
               th:action="@{/login/auth/process}" enctype="multipart/form-data">
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
