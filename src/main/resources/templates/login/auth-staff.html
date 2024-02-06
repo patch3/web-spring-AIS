@@ -12,6 +12,15 @@
         <legend>Staff:</legend>
         <form class="generated-form" method="POST"
               th:action="@{/staff/login/auth/process}" enctype="multipart/form-data">
+
+            <th:block th:if="${errorMessage}" class="errorMessage">
+                <fieldset>
+                    <legend>ERROR:</legend>
+                    <p th:text="${errorMessage}"></p>
+                </fieldset>
+            </th:block>
+
+
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <label for="email">Email:</label><br>
             <input id="email" name="username" type="email"><br>

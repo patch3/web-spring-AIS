@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{blocks/standart-sample :: head}"></head>
 <body>
 
@@ -8,6 +8,15 @@
 
     <a th:href="@{/logout}">logout</a>
 <div class="content">
+    <div>
+
+
+        <p th:text="'Auth username:' + ${email}">
+
+
+        <a th:href="@{/logout}">/logout</a>
+    </div>
+
 
 </div>
 </body>

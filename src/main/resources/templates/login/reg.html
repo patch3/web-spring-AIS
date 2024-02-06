@@ -15,6 +15,15 @@
               th:action="@{/login/reg/process}" enctype="multipart/form-data"
               th:object="${client}"
         >
+
+            <th:block th:if="${errorMessage}" class="errorMessage">
+                <fieldset>
+                    <legend>ERROR:</legend>
+                    <p th:text="${errorMessage}"></p>
+                </fieldset>
+            </th:block>
+
+
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <label for="fullName">Full name:</label><br>
             <input type="text" id="fullName" th:field="*{fullName}" autofocus="autofocus"><br>

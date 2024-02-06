@@ -15,11 +15,6 @@ public class HomeController {
     public String showHomePage(Model model) {
         model.addAttribute("namePage", "home");
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            model.addAttribute("username", authentication.getName());
-        }
-
         return "home";
     }
 }
