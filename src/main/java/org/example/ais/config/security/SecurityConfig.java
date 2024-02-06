@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
@@ -52,8 +54,6 @@ public class SecurityConfig {
             managerBuilder.userDetailsService(creditorDetailsService).passwordEncoder(passwordEncoder);
         }
 
-
-
         @Bean
         public SecurityFilterChain creditorFilterChain(HttpSecurity http) throws Exception {
             http.securityMatcher("/staff/**")
@@ -73,10 +73,14 @@ public class SecurityConfig {
                                     .logoutUrl("/logout")
                                     .logoutSuccessUrl("/logout/staff/process")
                                     .deleteCookies("JSESSIONID")
-                    ).csrf(
+                    ).csrf((csrf) -> csrf
                         //Customizer.withDefaults()
-                            (csrf) -> csrf
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    ).rememberMe((remember) -> remember
+                            .rememberMeParameter("remember-me")
+                            .key(SecretKeys.REMEMBER_ME)
+                            .tokenValiditySeconds(SecretKeys.TIME_REMEMBER)
+                            .userDetailsService(creditorDetailsService)
                     ).exceptionHandling(
                             (exception) -> exception
                                     .accessDeniedPage("/403")
@@ -127,6 +131,11 @@ public class SecurityConfig {
                     ).csrf(//Customizer.withDefaults()
                             (csrf) -> csrf
                                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    ).rememberMe((remember) -> remember
+                            .rememberMeParameter("remember-me")
+                            .key(SecretKeys.REMEMBER_ME)
+                            .tokenValiditySeconds(SecretKeys.TIME_REMEMBER)
+                            .userDetailsService(clientDetailsService)
                     ).exceptionHandling(
                             (exception) -> exception
                                     .accessDeniedPage("/403")

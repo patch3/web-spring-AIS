@@ -6,17 +6,17 @@
 <header th:replace="~{blocks/standart-sample :: header}"></header>
 <nav th:replace="~{blocks/standart-sample :: nav}"></nav>
 
-    <a th:href="@{/logout}">logout</a>
+
 <div class="content">
-    <div>
+    <a th:href="@{/logout}">logout</a>
+    <div class="context-info">
+        <div sec:authentication="hasRole('USER')">
+            <p th:text="'Full Name: '+${client.fullName}"></p>
+        </div>
+        <div sec:authentication="hasRole('ADMIN')">
 
-
-        <p th:text="'Auth username:' + ${email}">
-
-
-        <a th:href="@{/logout}">/logout</a>
+        </div>
     </div>
-
 
 </div>
 </body>

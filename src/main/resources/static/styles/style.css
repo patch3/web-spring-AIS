@@ -38,6 +38,23 @@ nav a:hover {
     padding: 20px;
     max-width: 720px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.context-info {
+    background-color: aqua;
+    border-bottom: 1px solid black;
+    width: 100%;
+
+}
+
+.item {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: aquamarine;
 }
 
 .generated-form {
@@ -78,4 +95,25 @@ nav a:hover {
     color: #fff;
     padding: 10px;
     cursor: pointer;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }

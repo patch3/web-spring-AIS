@@ -8,9 +8,31 @@
 <nav th:replace="~{blocks/standart-sample :: nav}"></nav>
 
 <div class="content">
+    <div class="context-info">
+        <h2>Кредиты</h2>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Full name</th>
+            <th>Email</th>
+            <th>Password photo</th>
+            <th>Password photo</th>
+            <th>acсept</th>
+            <th>reject</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client : ${clients}">
+            <td th:text="${client.fullName}"></td>
+            <td th:text="${client.email}"></td>
+            <td><a th:href="@{/staff/confirmation/pasport?id=${client.id}}">Go to the photo...</a></td>
+            <td><a th:href="@{/staff/confirmation/accept?id=${client.id}}">acсept</a></td>
+            <td><a th:href="@{/staff/confirmation/accept?id=${client.id}}">reject</a></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-
 
 </body>
 </html>

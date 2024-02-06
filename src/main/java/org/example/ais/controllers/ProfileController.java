@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,6 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/profile")
 public final class ProfileController {
-
     private final ClientRepository clientRepository;
     private final CreditorRepository creditorRepository;
 
@@ -52,10 +52,11 @@ public final class ProfileController {
             val creditor = creditorRepository.findByEmail(authentication.getName());
             model.addAttribute("creditor", creditor);
         } else {
-            val client = clientRepository.findByEmail(authentication.getName());
+            val client = clientRepository.findByEmail(authentication.getName())
+                    .orElseThrow(() -> new UsernameNotFoundException(
+                            "Creditor not found with email: "+ authentication.getName()));
             model.addAttribute("client", client);
         }
         return "/profile";
     }
-
 }
