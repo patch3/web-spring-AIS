@@ -24,6 +24,6 @@ public class AuthController {
     @GetMapping("/staff")
     public String authAdminPage(Model model) {
         model.addAttribute("namePage", "auth staff");
-        return "/login/auth-staff";
+        return "/staff/login/auth-staff";
     }
 }

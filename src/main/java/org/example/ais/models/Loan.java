@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @EnableJpaRepositories
 @Table(name = "loan")
-public class Loan extends Creditor {
+public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

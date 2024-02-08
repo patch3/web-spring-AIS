@@ -8,16 +8,18 @@
 
 
 <div class="content">
-    <a th:href="@{/logout}">logout</a>
     <div class="context-info">
-        <div sec:authentication="hasRole('USER')">
-            <p th:text="'Full Name: '+${client.fullName}"></p>
+        <div sec:authorize="hasRole('ROLE_STAFF')">
+            test2
         </div>
-        <div sec:authentication="hasRole('ADMIN')">
+        <div sec:authorize="hasRole('ROLE_CLIENT')">
+            text
+            <p th:text="'Full Name: ' + ${client.fullName}"></p>
+        </div>
 
-        </div>
     </div>
 
+    <a th:href="@{/logout}">/logout</a>
 </div>
 </body>
 </html>

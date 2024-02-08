@@ -1,8 +1,10 @@
 package org.example.ais.config.security;
 
 import org.example.ais.config.constants.RoleConst;
+import org.example.ais.services.CreditorDetailsServiceImpl;
 import org.example.ais.services.client.ClientDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -15,9 +17,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
 
@@ -40,13 +41,18 @@ public class SecurityConfig {
     @Configuration
     @Order(1)
     public static class CreditorConfigurationAdapter {
-        private final UserDetailsService creditorDetailsService;
+        private final CreditorDetailsServiceImpl creditorDetailsService;
         private final PasswordEncoder passwordEncoder;
 
         @Autowired
-        public CreditorConfigurationAdapter(ClientDetailsServiceImpl creditorDetailsService, PasswordEncoder passwordEncoder) {
+        public CreditorConfigurationAdapter(CreditorDetailsServiceImpl creditorDetailsService, PasswordEncoder passwordEncoder) {
             this.creditorDetailsService = creditorDetailsService;
             this.passwordEncoder = passwordEncoder;
+        }
+
+        @Bean
+        public CommandLineRunner initData() {
+            return args -> creditorDetailsService.register(BaseAdminConfig.EMAIL, BaseAdminConfig.PASSWORD);
         }
 
         @Autowired
@@ -60,18 +66,22 @@ public class SecurityConfig {
                     .authorizeHttpRequests(
                             (requests) -> requests
                                     .requestMatchers("/staff/**").hasRole(RoleConst.ADMIN)
-                                    .requestMatchers("/login/auth/admin", "/login/auth/admin/process").anonymous()
+                                    .requestMatchers(
+                                            "/staff/login/auth",
+                                            "/staff/login/auth/process"
+                                    ).anonymous()
                                     .anyRequest().authenticated()
                     ).formLogin(
                             (form) -> form
-                                    .loginPage("/login/auth/admin")
-                                    .loginProcessingUrl("/login/auth/process")
-                                    .failureUrl("/login/auth/admin")
-                                    .defaultSuccessUrl("/profile")
+                                    .loginPage("/staff/login/auth")
+                                    .loginProcessingUrl("/staff/login/auth/process")
+                                    .failureUrl("/staff/login/auth")
+                                    .defaultSuccessUrl("/staff/profile")
                     ).logout(
                             (logout) -> logout
-                                    .logoutUrl("/logout")
-                                    .logoutSuccessUrl("/logout/staff/process")
+                                    .permitAll()
+                                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                    .logoutSuccessUrl("/staff/logout/process")
                                     .deleteCookies("JSESSIONID")
                     ).csrf((csrf) -> csrf
                         //Customizer.withDefaults()
@@ -119,23 +129,25 @@ public class SecurityConfig {
                                     .anyRequest().authenticated()
                     ).formLogin(
                             (form) -> form
-                                    .loginPage("/login/auth")
+                                    .loginPage("/login/auth").permitAll()
                                     .loginProcessingUrl("/login/auth/process")
                                     .failureUrl("/login/auth?error")
                                     .defaultSuccessUrl("/profile")
                     ).logout(
                             (logout) -> logout
-                                    .logoutUrl("/logout")
+                                    .permitAll()
+                                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                     .logoutSuccessUrl("/logout/client/process")
                                     .deleteCookies("JSESSIONID")
                     ).csrf(//Customizer.withDefaults()
                             (csrf) -> csrf
                                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                    ).rememberMe((remember) -> remember
-                            .rememberMeParameter("remember-me")
-                            .key(SecretKeys.REMEMBER_ME)
-                            .tokenValiditySeconds(SecretKeys.TIME_REMEMBER)
-                            .userDetailsService(clientDetailsService)
+                    ).rememberMe(
+                            (remember) -> remember
+                                .rememberMeParameter("remember-me")
+                                .key(SecretKeys.REMEMBER_ME)
+                                .tokenValiditySeconds(SecretKeys.TIME_REMEMBER)
+                                .userDetailsService(clientDetailsService)
                     ).exceptionHandling(
                             (exception) -> exception
                                     .accessDeniedPage("/403")

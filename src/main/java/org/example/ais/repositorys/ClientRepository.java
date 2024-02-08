@@ -14,11 +14,9 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<Client> findByEmail(String email);
     @NonNull
-    @Override
     List<Client> findAll();
 
     // Запрос для получения только фото по ID
     @Query("SELECT c.passportPhoto FROM Client c WHERE c.id = :id")
     byte[] findImageDataById(@Param("id") Long id);
-
 }
