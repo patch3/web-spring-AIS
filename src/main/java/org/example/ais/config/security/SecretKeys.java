@@ -1,6 +1,5 @@
 package org.example.ais.config.security;
 
-import javax.swing.*;
 import java.util.Random;
 
 public final class SecretKeys {

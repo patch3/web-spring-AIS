@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,7 +17,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
 
@@ -35,6 +33,24 @@ public class SecurityConfig {
     @Lazy
     public SpringSecurityDialect springSecurityDialect() {
         return new SpringSecurityDialect();
+    }
+
+    @Bean
+    public SecurityFilterChain standardFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(
+                        (request) -> request
+                                .requestMatchers(
+                                        //"/staff/**", "/client/**",
+                                        "/styles/style.css",
+                                        "/", "/home"
+                                ).permitAll()
+                                .anyRequest().authenticated()
+                ).formLogin(
+                        (form) -> form
+                                .loginPage("/client/login/auth")
+                );
+        return http.build();
     }
 
 
@@ -65,11 +81,11 @@ public class SecurityConfig {
             http.securityMatcher("/staff/**")
                     .authorizeHttpRequests(
                             (requests) -> requests
-                                    .requestMatchers("/staff/**").hasRole(RoleConst.ADMIN)
                                     .requestMatchers(
                                             "/staff/login/auth",
                                             "/staff/login/auth/process"
                                     ).anonymous()
+                                    .requestMatchers("/staff/**").hasRole(RoleConst.ADMIN)
                                     .anyRequest().authenticated()
                     ).formLogin(
                             (form) -> form
@@ -80,7 +96,7 @@ public class SecurityConfig {
                     ).logout(
                             (logout) -> logout
                                     .permitAll()
-                                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                    .logoutUrl("/staff/logout")
                                     .logoutSuccessUrl("/staff/logout/process")
                                     .deleteCookies("JSESSIONID")
                     ).csrf((csrf) -> csrf
@@ -118,36 +134,35 @@ public class SecurityConfig {
 
         @Bean
         public SecurityFilterChain clientFilterChain(HttpSecurity http) throws Exception {
-            http
+            http.securityMatcher("/client/**")
                     .authorizeHttpRequests(
                             (requests) -> requests
-                                    .requestMatchers("/styles/style.css", "/", "/home").permitAll()
                                     .requestMatchers(
-                                            "/login/reg", "/login/reg/process",
-                                            "/login/auth", "/login/auth/process"
+                                            "/client/login/reg", "/client/login/reg/process",
+                                            "/client/login/auth", "/client/login/auth/process"
                                     ).anonymous()
                                     .anyRequest().authenticated()
                     ).formLogin(
                             (form) -> form
-                                    .loginPage("/login/auth").permitAll()
-                                    .loginProcessingUrl("/login/auth/process")
-                                    .failureUrl("/login/auth?error")
-                                    .defaultSuccessUrl("/profile")
+                                    .loginPage("/client/login/auth").permitAll()
+                                    .loginProcessingUrl("/client/login/auth/process")
+                                    .failureUrl("/client/login/auth?error")
+                                    .defaultSuccessUrl("/client/profile")
                     ).logout(
                             (logout) -> logout
                                     .permitAll()
-                                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                    .logoutSuccessUrl("/logout/client/process")
+                                    .logoutUrl("/client/logout")
+                                    .logoutSuccessUrl("/client/logout/process")
                                     .deleteCookies("JSESSIONID")
                     ).csrf(//Customizer.withDefaults()
                             (csrf) -> csrf
                                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     ).rememberMe(
                             (remember) -> remember
-                                .rememberMeParameter("remember-me")
-                                .key(SecretKeys.REMEMBER_ME)
-                                .tokenValiditySeconds(SecretKeys.TIME_REMEMBER)
-                                .userDetailsService(clientDetailsService)
+                                    .rememberMeParameter("remember-me")
+                                    .key(SecretKeys.REMEMBER_ME)
+                                    .tokenValiditySeconds(SecretKeys.TIME_REMEMBER)
+                                    .userDetailsService(clientDetailsService)
                     ).exceptionHandling(
                             (exception) -> exception
                                     .accessDeniedPage("/403")

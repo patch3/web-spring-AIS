@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--
+На страницу попадет только клиент
+в модели лежит экземпляр client
+-->
+<head th:replace="~{blocks/standart-sample :: head}"></head>
+<body>
+
+<header th:replace="~{blocks/standart-sample :: header}"></header>
+<nav th:replace="~{blocks/standart-sample :: nav}"></nav>
+
+
+<div class="content">
+    <a th:href="@{/logout}">logout</a>
+    <div class="context-info">
+        <p th:text="'Full name: ' + ${client.fullName}"></p>
+        <p th:text="'email: ' + ${client.email}"></p>
+
+
+    </div>
+
+    <div class="item">
+
+    </div>
+
+</div>
+</body>
+</html>

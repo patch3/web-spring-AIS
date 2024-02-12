@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{blocks/standart-sample :: head}"></head>
+<body>
+
+<header th:replace="~{blocks/standart-sample :: header}"></header>
+<nav th:replace="~{blocks/standart-sample :: nav}"></nav>
+
+
+<div class="content">
+    <!--/*@thymesVar id="error" type="String"*/-->
+    <p th:text="'error: ' + ${error}"></p>
+</div>
+
+</body>
+</html>

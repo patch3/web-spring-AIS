@@ -9,14 +9,13 @@
 
 <div class="content">
     <div class="context-info">
-        <h2>Кредиты</h2>
+        <h2>Creditors</h2>
     </div>
     <table>
         <thead>
         <tr>
             <th>Full name</th>
             <th>Email</th>
-            <th>Password photo</th>
             <th>Password photo</th>
             <th>acсept</th>
             <th>reject</th>
@@ -26,7 +25,7 @@
         <tr th:each="client : ${clients}">
             <td th:text="${client.fullName}"></td>
             <td th:text="${client.email}"></td>
-            <td><a th:href="@{/staff/confirmation/pasport?id=${client.id}}">Go to the photo...</a></td>
+            <td><a th:href="@{'/staff/img/passport/' + ${client.id}}">Go to the photo...</a></td>
             <td><a th:href="@{/staff/confirmation/accept?id=${client.id}}">acсept</a></td>
             <td><a th:href="@{/staff/confirmation/accept?id=${client.id}}">reject</a></td>
         </tr>

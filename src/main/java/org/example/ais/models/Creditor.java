@@ -1,10 +1,9 @@
 package org.example.ais.models;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import jakarta.persistence.*;
 
 @Getter
 @Setter
@@ -19,10 +18,10 @@ public class Creditor {
     private Long id;
 
     @Column(name = "email")
-    public String email;
+    private String email;
 
     @Column(name = "password_hash")
-    public String passwordHash;
+    private String passwordHash;
 
     public Creditor() {
     }

@@ -20,11 +20,18 @@
         <th:block th:unless="${#authentication != null}">
             <a th:href="@{/login/auth}">Login</a>
         </th:block>-->
-        <div sec:authorize="isAuthenticated()">
+        <!--<div sec:authorize="isAuthenticated()">
+            <a th:href="@{/profile}" th:text="${#authentication.principal.username}"></a>
+        </div>-->
+        <div sec:authorize="hasRole('ROLE_CLIENT')">
             <a th:href="@{/profile}" th:text="${#authentication.principal.username}"></a>
         </div>
+        <div sec:authorize="hasRole('ROLE_STAFF')">
+            <a th:href="@{/staff/profile}" th:text="${#authentication.principal.username}"></a>
+        </div>
+
         <div sec:authorize="isAnonymous()">
-            <a th:href="@{/login/auth}">Login</a>
+            <a th:href="@{/client/login/auth}">Login</a>
         </div>
     </div>
 </nav>

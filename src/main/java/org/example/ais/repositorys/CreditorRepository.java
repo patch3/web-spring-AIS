@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface CreditorRepository extends JpaRepository<Creditor, Long> {
     Optional<Creditor> findByEmail(String email);
     Long countByEmail(String email);
+
+
 }

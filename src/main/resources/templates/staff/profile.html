@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--
+На страницу попадет только кредитор
+в модели лежит экземпляр creditor
+-->
+<head th:replace="~{blocks/standart-sample :: head}"></head>
+<body>
+
+<header th:replace="~{blocks/standart-sample :: header}"></header>
+<nav th:replace="~{blocks/standart-sample :: nav}"></nav>
+
+
+<div class="content">
+    <div class="context-info">
+        <!--/*@thymesVar id="error" type="org.example.ais.models.Creditor"*/-->
+        <p th:text="'email: ' + ${creditor.email}">
+
+        <p><a th:href="@{/logout}">logout</a></p>
+    </div>
+
+    <div class="item">
+        <p>Confirmation: <a th:href="@{/staff/confirmation}">page to go</a></p>
+    </div>
+
+</div>
+</body>
+</html>

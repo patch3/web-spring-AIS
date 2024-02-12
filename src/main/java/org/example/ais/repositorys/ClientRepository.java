@@ -2,6 +2,7 @@ package org.example.ais.repositorys;
 
 import org.example.ais.models.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.lang.NonNull;
@@ -16,7 +17,13 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @NonNull
     List<Client> findAll();
 
-    // Запрос для получения только фото по ID
     @Query("SELECT c.passportPhoto FROM Client c WHERE c.id = :id")
-    byte[] findImageDataById(@Param("id") Long id);
+    Optional<byte[]> findPassportPhotoById(@Param("id") Long id);
+
+
+    @Modifying
+    @Query("UPDATE Client c SET c.confirmed = true WHERE c.id = :id")
+    void enableClientById(@Param("id") Long id);
+
+    void deleteById(@NonNull Long id);
 }

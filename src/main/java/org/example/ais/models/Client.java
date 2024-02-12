@@ -26,8 +26,8 @@ public class Client {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "confirmed_account", nullable = false)
-    private boolean confirmedAccount;
+    @Column(name = "confirmed", nullable = false)
+    private boolean confirmed;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
@@ -48,10 +48,10 @@ public class Client {
 
     public Client(){}
 
-    public Client(String fullName, String email, boolean confirmedAccount, byte[] passportPhoto, String passwordHash) {
+    public Client(String fullName, String email, boolean confirmed, byte[] passportPhoto, String passwordHash) {
         this.fullName = fullName;
         this.email = email;
-        this.confirmedAccount = confirmedAccount;
+        this.confirmed = confirmed;
         this.passportPhoto = passportPhoto;
         this.passwordHash = passwordHash;
     }

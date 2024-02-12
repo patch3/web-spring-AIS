@@ -1,8 +1,7 @@
-package org.example.ais.controllers.login;
+package org.example.ais.controllers.client.login;
 
 import org.example.ais.dto.client.ClientRegistrationDTO;
 import org.example.ais.services.client.ClientDetailService;
-import org.example.ais.services.client.ClientDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/login/reg")
-public class RegController {
+@RequestMapping("/client/login/reg")
+public final class RegController {
     private final ClientDetailService clientDetailService;
 
     @Autowired
@@ -27,7 +26,7 @@ public class RegController {
     @GetMapping
     public String showRegistrationPage(Model model) {
         model.addAttribute("namePage", "registration");
-        return "/login/reg";
+        return "/client/login/reg";
     }
 
     @ModelAttribute("client")
@@ -42,7 +41,7 @@ public class RegController {
     ){
         if (!clientRegistrationDTO.passwordIsEquals()) {
             model.addAttribute("error", "Password do not match");
-            return "redirect:/login/reg";
+            return "redirect:/client/login/reg";
         }
         try {
             clientDetailService.save(clientRegistrationDTO);
@@ -50,7 +49,7 @@ public class RegController {
             return "redirect:/home";
         } catch (IOException ex) {
             model.addAttribute("error", "Error processing passport photo");
-            return "redirect:/login/reg";
+            return "redirect:/client/login/reg";
         }
     }
 }
