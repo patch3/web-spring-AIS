@@ -22,16 +22,17 @@ public class ConfirmationController {
     @GetMapping
     public String confirmationPage(Model model) {
         model.addAttribute("namePage", clientRepository.findAll());
-        model.addAttribute("clients", clientRepository.findAll());
+        model.addAttribute("clients", clientRepository.findByConfirmedFalse());
         return "/staff/tables/confirmation";
     }
 
     @GetMapping("/accept")
     public String acceptEntryClient(
-            @RequestParam(name="id") Integer id,
+            @RequestParam(name="id") Long id,
             Model model
     ) {
-
+        clientRepository.confirmClientById(id);
+//        clientRepository.updateConfirmedById(id,true);
         return "redirect:/staff/confirmation";
     }
 }

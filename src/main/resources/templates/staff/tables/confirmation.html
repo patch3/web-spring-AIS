@@ -26,8 +26,8 @@
             <td th:text="${client.fullName}"></td>
             <td th:text="${client.email}"></td>
             <td><a th:href="@{'/staff/img/passport/' + ${client.id}}">Go to the photo...</a></td>
-            <td><a th:href="@{/staff/confirmation/accept?id=${client.id}}">acсept</a></td>
-            <td><a th:href="@{/staff/confirmation/accept?id=${client.id}}">reject</a></td>
+            <td><a th:href="@{'/staff/confirmation/accept?id=' + ${client.id}}">acсept</a></td>
+            <td><a th:href="@{'/staff/confirmation/accept?id=' + ${client.id}}">reject</a></td>
         </tr>
         </tbody>
     </table>

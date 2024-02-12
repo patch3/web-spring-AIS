@@ -61,7 +61,10 @@ public class SecurityConfig {
         private final PasswordEncoder passwordEncoder;
 
         @Autowired
-        public CreditorConfigurationAdapter(CreditorDetailsServiceImpl creditorDetailsService, PasswordEncoder passwordEncoder) {
+        public CreditorConfigurationAdapter(
+                CreditorDetailsServiceImpl creditorDetailsService,
+                PasswordEncoder passwordEncoder
+        ) {
             this.creditorDetailsService = creditorDetailsService;
             this.passwordEncoder = passwordEncoder;
         }
@@ -95,10 +98,11 @@ public class SecurityConfig {
                                     .defaultSuccessUrl("/staff/profile")
                     ).logout(
                             (logout) -> logout
-                                    .permitAll()
                                     .logoutUrl("/staff/logout")
-                                    .logoutSuccessUrl("/staff/logout/process")
+                                    .logoutSuccessUrl("/staff/logout/auth?logout")
+                                    .invalidateHttpSession(true)
                                     .deleteCookies("JSESSIONID")
+                                    .permitAll()
                     ).csrf((csrf) -> csrf
                         //Customizer.withDefaults()
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -141,6 +145,7 @@ public class SecurityConfig {
                                             "/client/login/reg", "/client/login/reg/process",
                                             "/client/login/auth", "/client/login/auth/process"
                                     ).anonymous()
+                                    .requestMatchers("/client/**").hasRole(RoleConst.USER)
                                     .anyRequest().authenticated()
                     ).formLogin(
                             (form) -> form
@@ -154,6 +159,7 @@ public class SecurityConfig {
                                     .logoutUrl("/client/logout")
                                     .logoutSuccessUrl("/client/logout/process")
                                     .deleteCookies("JSESSIONID")
+                                    .permitAll()
                     ).csrf(//Customizer.withDefaults()
                             (csrf) -> csrf
                                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())

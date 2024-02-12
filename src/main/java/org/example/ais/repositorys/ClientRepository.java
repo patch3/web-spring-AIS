@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +23,15 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
 
     @Modifying
-    @Query("UPDATE Client c SET c.confirmed = true WHERE c.id = :id")
-    void enableClientById(@Param("id") Long id);
+    @Transactional
+    @Query("UPDATE Client c SET c.confirmed = true WHERE c.id = :clientId")
+    void confirmClientById(Long clientId);
+
+
+
+    /*@Transactional
+    void updateConfirmedById(Long clientId, boolean confirmed);*/
+    List<Client> findByConfirmedFalse();
 
     void deleteById(@NonNull Long id);
 }
