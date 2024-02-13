@@ -26,13 +26,21 @@ public class ConfirmationController {
         return "/staff/tables/confirmation";
     }
 
-    @GetMapping("/accept")
+    @PostMapping("/accept")
     public String acceptEntryClient(
             @RequestParam(name="id") Long id,
             Model model
     ) {
         clientRepository.confirmClientById(id);
-//        clientRepository.updateConfirmedById(id,true);
+        return "redirect:/staff/confirmation";
+    }
+
+    @PostMapping("/reject")
+    public String rejectEntryClient(
+            @RequestParam(name = "id") Long id,
+            Model model
+    ) {
+        clientRepository.deleteById(id);
         return "redirect:/staff/confirmation";
     }
 }

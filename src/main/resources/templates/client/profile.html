@@ -12,12 +12,12 @@
 
 
 <div class="content">
-    <a th:href="@{/logout}">logout</a>
+    <form method="post" name="logoutForm" th:action="@{/logout}" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
     <div class="context-info">
         <p th:text="'Full name: ' + ${client.fullName}"></p>
         <p th:text="'email: ' + ${client.email}"></p>
-
-
     </div>
 
     <div class="item">

@@ -16,7 +16,9 @@
         <!--/*@thymesVar id="error" type="org.example.ais.models.Creditor"*/-->
         <p th:text="'email: ' + ${creditor.email}">
 
-        <p><a th:href="@{/staff/logout}">logout</a></p>
+        <form method="post" name="logoutForm" th:action="@{/staff/logout}" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
+        </form>
     </div>
 
     <div class="item">
