@@ -22,4 +22,6 @@ public class LoansController {
         model.addAttribute("loans", loanRepository.findAll());
         return "/client/tables/loans";
     }
+
+
 }

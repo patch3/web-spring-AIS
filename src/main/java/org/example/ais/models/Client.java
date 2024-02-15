@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.ais.projections.ClientProjection;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Set;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Entity
 @EnableJpaRepositories
 @Table(name = "client")
-public class Client {
+public class Client implements ClientProjection {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)

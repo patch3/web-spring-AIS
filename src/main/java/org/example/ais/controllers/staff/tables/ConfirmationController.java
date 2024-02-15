@@ -1,13 +1,16 @@
 package org.example.ais.controllers.staff.tables;
 
+import org.example.ais.projections.ClientProjection;
 import org.example.ais.repositorys.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/staff/confirmation")
@@ -27,20 +30,21 @@ public class ConfirmationController {
     }
 
     @PostMapping("/accept")
-    public String acceptEntryClient(
-            @RequestParam(name="id") Long id,
-            Model model
-    ) {
+    public String acceptEntryClient(@RequestParam(name="id") Long id) {
         clientRepository.confirmClientById(id);
         return "redirect:/staff/confirmation";
     }
 
     @PostMapping("/reject")
-    public String rejectEntryClient(
-            @RequestParam(name = "id") Long id,
-            Model model
-    ) {
+    public String rejectEntryClient(@RequestParam(name = "id") Long id) {
         clientRepository.deleteById(id);
         return "redirect:/staff/confirmation";
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ClientProjection> filtredData(@RequestParam("pattern") String pattern, String column){
+        Sort sort = Sort.by(Sort.Direction.ASC, column);
+        return clientRepository.findProjectionByFullNameStartingWithAndConfirmedFalse(pattern,sort);
     }
 }

@@ -1,30 +1,24 @@
-$(document).ready(function () {
-    $('#columnSelector, #filterInput').on('change input', function () {
-        applyFilter();
+function updateOption() {
+    const txt = inputText.value;
+    $.ajax({
+        url: '/staff/confirmation/getdata',
+        data: {
+            pattern: txt
+        },
+        type: 'POST',
+        success: function (data) {
+            $("#SearchResultTable tbody tr").remove();
+            for (let i = 0; i < data.length; i++) {
+                $('#SearchResultTable > tbody:last-child').append(
+                    '<tr><th scope="row">'
+                    + data[i].client.id + '</td><td>'
+                    + data[i].client.firstName + '</td><td>'
+                    + data[i].client.lastName + '</td><td>'
+                    + data[i].book.id + '</td><td>'
+                    + data[i].book.name + '</td>'
+                );
+            }
+        }
     });
+}
 
-    function applyFilter() {
-        const selectedColumn = $('#columnSelector').val();
-        const filterText = $('#filterInput').val().toLowerCase();
-
-        $('.client-row').each(function () {
-            const rowText = $(this).find('td:eq(' + getColumnIndex(selectedColumn) + ')').text().toLowerCase();
-            if (rowText.startsWith(filterText)) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    }
-
-    function getColumnIndex(columnName) {
-        let columnIndex = -1;
-        $('th').each(function (index) {
-            if ($(this).text() === columnName) {
-                columnIndex = index;
-                return false; // break the loop
-            }
-        });
-        return columnIndex;
-    }
-});

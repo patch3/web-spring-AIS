@@ -1,6 +1,8 @@
 package org.example.ais.repositorys;
 
 import org.example.ais.models.Client;
+import org.example.ais.projections.ClientProjection;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,5 +35,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     void updateConfirmedById(Long clientId, boolean confirmed);*/
     List<Client> findByConfirmedFalse();
 
+    List<ClientProjection> findProjectionByFullNameStartingWithAndConfirmedFalse(String prefix, Sort sort);
     void deleteById(@NonNull Long id);
 }
