@@ -1,8 +1,6 @@
 package org.example.ais.dto.client;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -13,7 +13,7 @@ import java.util.Collections;
 public record ClientDetails(Client client) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList( new SimpleGrantedAuthority("ROLE_" + RoleConst.USER) );
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + RoleConst.USER));
     }
 
     @Override

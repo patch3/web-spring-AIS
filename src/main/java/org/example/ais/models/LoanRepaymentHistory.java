@@ -1,10 +1,10 @@
 package org.example.ais.models;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import jakarta.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -30,7 +30,8 @@ public class LoanRepaymentHistory {
     @Column(name = "repayment_data")
     private Date repaymentData;
 
-    public LoanRepaymentHistory() {}
+    public LoanRepaymentHistory() {
+    }
 
     public LoanRepaymentHistory(Client client, Loan loan, Date repaymentData) {
         this.client = client;

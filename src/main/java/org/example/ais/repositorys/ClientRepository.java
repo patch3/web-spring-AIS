@@ -17,8 +17,12 @@ import java.util.Optional;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<Client> findByEmail(String email);
+
     @NonNull
     List<Client> findAll();
+
+    @NonNull
+    List<Client> findAll(@NonNull Sort sort);
 
     @Query("SELECT c.passportPhoto FROM Client c WHERE c.id = :id")
     Optional<byte[]> findPassportPhotoById(@Param("id") Long id);
@@ -30,11 +34,15 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     void confirmClientById(Long clientId);
 
 
-
     /*@Transactional
     void updateConfirmedById(Long clientId, boolean confirmed);*/
     List<Client> findByConfirmedFalse();
 
+
+    @NonNull
+    List<Client> findByConfirmedFalse(Sort sort);
+
     List<ClientProjection> findProjectionByFullNameStartingWithAndConfirmedFalse(String prefix, Sort sort);
+
     void deleteById(@NonNull Long id);
 }

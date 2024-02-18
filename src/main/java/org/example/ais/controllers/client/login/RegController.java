@@ -38,7 +38,7 @@ public final class RegController {
     public String processRegistration(
             @ModelAttribute("client") ClientRegistrationDTO clientRegistrationDTO,
             Model model
-    ){
+    ) {
         if (!clientRegistrationDTO.passwordIsEquals()) {
             model.addAttribute("error", "Password do not match");
             return "redirect:/client/login/reg";

@@ -1,6 +1,6 @@
 package org.example.ais.config.constants;
 
-public  final  class RoleConst {
+public final class RoleConst {
 
     // user = client
     public static final String USER = "CLIENT";

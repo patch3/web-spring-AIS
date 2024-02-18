@@ -32,7 +32,7 @@ public class Client implements ClientProjection {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "passport_photo",  columnDefinition="longblob", nullable = false)
+    @Column(name = "passport_photo", columnDefinition = "longblob", nullable = false)
     private byte[] passportPhoto;
 
     @Column(name = "password_hash", nullable = false)
@@ -47,7 +47,8 @@ public class Client implements ClientProjection {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private Set<LoanRepaymentHistory> clientRepaymentHistory;
 
-    public Client(){}
+    public Client() {
+    }
 
     public Client(String fullName, String email, boolean confirmed, byte[] passportPhoto, String passwordHash) {
         this.fullName = fullName;

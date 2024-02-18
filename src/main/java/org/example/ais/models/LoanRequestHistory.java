@@ -1,22 +1,22 @@
 package org.example.ais.models;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import jakarta.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
 
 @Entity
-@Table(name="loan_request_history")
+@Table(name = "loan_request_history")
 @EnableJpaRepositories
 public class LoanRequestHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
 
@@ -32,7 +32,8 @@ public class LoanRequestHistory {
     @Column(name = "data_time", nullable = false)
     private Date dataTime;
 
-    public LoanRequestHistory() {}
+    public LoanRequestHistory() {
+    }
 
     public LoanRequestHistory(
             Client client,

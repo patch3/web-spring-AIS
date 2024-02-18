@@ -9,11 +9,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
+        /*registry
                 .addResourceHandler("/styles/**")
-                .addResourceLocations("classpath:/static/styles/");
+                .addResourceLocations("classpath:/static/styles/");*/
 
     }
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         /*registry.addViewController("/staff/logout").setViewName("redirect:/home?logout");

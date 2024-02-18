@@ -11,12 +11,12 @@
 <div class="content">
     <fieldset>
         <legend>Client:</legend>
-        <form class="generated-form" method="POST"
-              enctype="multipart/form-data" th:action="@{/client/login/reg/process}"
+        <form class="generated-form" enctype="multipart/form-data"
+              method="POST" th:action="@{/client/login/reg/process}"
               th:object="${client}"
         >
 
-            <th:block th:if="${errorMessage}" class="errorMessage">
+            <th:block class="errorMessage" th:if="${errorMessage}">
                 <fieldset>
                     <legend>ERROR:</legend>
                     <p th:text="${errorMessage}"></p>
@@ -26,19 +26,20 @@
 
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <label for="fullName">Full name:</label><br>
-            <input type="text" id="fullName" th:field="*{fullName}" autofocus="autofocus"><br>
+            <input autofocus="autofocus" id="fullName" th:field="*{fullName}" type="text"><br>
             <label for="email">Email:</label><br>
-            <input type="email" id="email" th:field="*{email}"><br>
+            <input id="email" th:field="*{email}" type="email"><br>
             <label for="passportPhoto">Passport photo:</label><br>
-            <input type="file" id="passportPhoto" th:field="*{passportPhoto}"><br>
+            <input id="passportPhoto" th:field="*{passportPhoto}" type="file"><br>
             <label for="password">Password:</label><br>
-            <input type="password" id="password" th:field="*{password}"><br>
+            <input id="password" th:field="*{password}" type="password"><br>
             <label for="repeat_password">Repeat password</label><br>
-            <input type="password" id="repeat_password" th:field="*{repeatPassword}"><br>
+            <input id="repeat_password" th:field="*{repeatPassword}" type="password"><br>
             <br>
             <a th:href="@{/client/login/auth}">authorization</a><br>
             <!--<input type="submit" value="Registration"><br><br>-->
-            <button type="submit">Registration</button><br><br>
+            <button type="submit">Registration</button>
+            <br><br>
         </form>
     </fieldset>
 </div>

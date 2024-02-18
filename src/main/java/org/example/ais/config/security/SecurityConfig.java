@@ -42,7 +42,8 @@ public class SecurityConfig {
                         (request) -> request
                                 .requestMatchers(
                                         //"/staff/**", "/client/**",
-                                        "/styles/style.css",
+                                        "/styles/**",
+                                        "/scripts/**",
                                         "/", "/home"
                                 ).permitAll()
                                 .anyRequest().authenticated()
@@ -104,7 +105,7 @@ public class SecurityConfig {
                                     .deleteCookies("JSESSIONID")
                                     .permitAll()
                     ).csrf((csrf) -> csrf
-                        //Customizer.withDefaults()
+                            //Customizer.withDefaults()
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     ).rememberMe((remember) -> remember
                             .rememberMeParameter("remember-me")

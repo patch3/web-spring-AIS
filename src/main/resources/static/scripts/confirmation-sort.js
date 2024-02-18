@@ -1,19 +1,25 @@
 function updateOption() {
-    const txt = inputText.value;
+    const column = columnSelector.value;
+    const pattern = filterInput.value;
+
     $.ajax({
-        url: '/staff/confirmation/getdata',
-        data: {
-            pattern: txt
-        },
+        url: '/staff/confirmation/filtered-data',
         type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_csrf"]').attr('content')
+        },
+        data: {
+            column: column,
+            pattern: pattern
+        },
         success: function (data) {
-            $("#SearchResultTable tbody tr").remove();
+            $("#search-result-table tbody tr").remove();
             for (let i = 0; i < data.length; i++) {
-                $('#SearchResultTable > tbody:last-child').append(
+                $('#search-result-table > tbody:last-child').append(
                     '<tr><th scope="row">'
-                    + data[i].client.id + '</td><td>'
-                    + data[i].client.firstName + '</td><td>'
-                    + data[i].client.lastName + '</td><td>'
+                    + data[i].fullName + '</td><td>'
+                    + data[i].email + '</td><td>'
+                    + data[i].age + '</td><td>'
                     + data[i].book.id + '</td><td>'
                     + data[i].book.name + '</td>'
                 );
@@ -21,4 +27,11 @@ function updateOption() {
         }
     });
 }
+
+let filterInput = document.getElementById("filterInput");
+let columnSelector = document.getElementById("columnSelector");
+
+filterInput.addEventListener("input", updateOption)
+columnSelector.addEventListener("change", updateOption)
+
 

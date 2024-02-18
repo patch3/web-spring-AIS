@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 public final class CreditorDetailsServiceImpl implements UserDetailsService {
     private final CreditorRepository creditorRepository;
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public CreditorDetailsServiceImpl(CreditorRepository creditorRepository, PasswordEncoder passwordEncoder) {
         this.creditorRepository = creditorRepository;
@@ -27,7 +28,7 @@ public final class CreditorDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         val creditor = creditorRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Creditor not found with email: "+email));
+                .orElseThrow(() -> new UsernameNotFoundException("Creditor not found with email: " + email));
         return User
                 .withUsername(creditor.getEmail())
                 .password(creditor.getPasswordHash())

@@ -1,11 +1,11 @@
 package org.example.ais.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import jakarta.persistence.*;
 import java.util.Set;
 
 

@@ -1,7 +1,6 @@
 package org.example.ais.services.client;
 
 import org.example.ais.dto.client.ClientDTO;
-import org.example.ais.dto.client.ClientRegistrationDTO;
 import org.example.ais.models.Client;
 import org.example.ais.repositorys.ClientRepository;
 import org.example.ais.security.ClientDetails;
@@ -39,11 +38,11 @@ public final class ClientDetailsServiceImpl implements ClientDetailService {
     public void save(ClientDTO clientDTO) throws IOException {
         clientRepository.save(
                 new Client(
-                    clientDTO.getFullName(),
-                    clientDTO.getEmail(),
-                    false,
-                    clientDTO.getPassportPhoto().getBytes(),
-                    passwordEncoder.encode(clientDTO.getPassword())
+                        clientDTO.getFullName(),
+                        clientDTO.getEmail(),
+                        false,
+                        clientDTO.getPassportPhoto().getBytes(),
+                        passwordEncoder.encode(clientDTO.getPassword())
                 )
         );
     }

@@ -24,13 +24,19 @@ public class ConfirmationController {
 
     @GetMapping
     public String confirmationPage(Model model) {
-        model.addAttribute("namePage", clientRepository.findAll());
-        model.addAttribute("clients", clientRepository.findByConfirmedFalse());
+        model.addAttribute("namePage", "confirmation");
+        model.addAttribute(
+                "clients",
+                clientRepository.findByConfirmedFalse(
+                        Sort.by(Sort.Direction.ASC, "fullName"
+                        )
+                )
+        );
         return "/staff/tables/confirmation";
     }
 
     @PostMapping("/accept")
-    public String acceptEntryClient(@RequestParam(name="id") Long id) {
+    public String acceptEntryClient(@RequestParam(name = "id") Long id) {
         clientRepository.confirmClientById(id);
         return "redirect:/staff/confirmation";
     }
@@ -43,8 +49,11 @@ public class ConfirmationController {
 
     @ResponseBody
     @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ClientProjection> filtredData(@RequestParam("pattern") String pattern, String column){
+    public List<ClientProjection> filteredData(
+            @RequestParam(name = "column") String column,
+            @RequestParam(name = "pattern") String pattern
+    ) {
         Sort sort = Sort.by(Sort.Direction.ASC, column);
-        return clientRepository.findProjectionByFullNameStartingWithAndConfirmedFalse(pattern,sort);
+        return clientRepository.findProjectionByFullNameStartingWithAndConfirmedFalse(pattern, sort);
     }
 }

@@ -10,29 +10,30 @@
 <div class="content">
     <fieldset>
         <legend>Staff:</legend>
-        <form class="generated-form" method="POST"
-              th:action="@{/staff/login/auth/process}" enctype="multipart/form-data">
+        <form class="generated-form" enctype="multipart/form-data"
+              method="POST" th:action="@{/staff/login/auth/process}">
 
-            <th:block th:if="${errorMessage}" class="errorMessage">
+            <div class="errorMessage" th:if="${errorMessage}">
                 <fieldset>
                     <legend>ERROR:</legend>
                     <p th:text="${errorMessage}"></p>
                 </fieldset>
-            </th:block>
+            </div>
 
 
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-            <label for="email">Email:</label><br>
-            <input id="email" name="username" type="email"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password"><br>
+            <label for="email">Email:</label>
+            <input id="email" name="username" type="email">
+            <label for="password">Password:</label>
+            <input id="password" name="password" type="password">
             <label for="remember-me">Remember me:
                 <input id="remember-me" name="remember-me" type="checkBox"/>
             </label>
 
-            <a th:href="@{/client/login/auth}">auth for client</a><br>
+            <a th:href="@{/client/login/auth}">auth for client</a>
 
-            <button>authenticate</button><br><br>
+            <button>authenticate</button>
+            <br>
         </form>
     </fieldset>
 </div>

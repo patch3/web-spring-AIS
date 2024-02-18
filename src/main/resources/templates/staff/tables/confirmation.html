@@ -11,7 +11,17 @@
     <div class="context-info">
         <h2>Creditors</h2>
     </div>
-    <table>
+
+    <label>filter Input:
+        <select id="columnSelector">
+            <option selected value="fullName">Full Name</option>
+            <option value="email">Email</option>
+            <option value="age">Age</option>
+        </select>
+        <input id="filterInput" type="text"/>
+    </label>
+
+    <table id="search-result-table">
         <thead>
         <tr>
             <th>Full name</th>
@@ -22,7 +32,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="client : ${clients}">
+        <tr id="tableBody" th:each="client : ${clients}">
             <td th:text="${client.fullName}"></td>
             <td th:text="${client.email}"></td>
             <td><a th:href="@{'/staff/img/passport/' + ${client.id}}">Go to the photo...</a></td>
@@ -40,10 +50,8 @@
         </tr>
         </tbody>
     </table>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script th:src="@{/script/configuration.js}"></script>
 </div>
-
+<script th:src="@{/scripts/lib/jquery-3.7.1.js}"></script>
+<script th:src="@{/scripts/confirmation-sort.js}"></script>
 </body>
 </html>

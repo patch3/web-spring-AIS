@@ -29,8 +29,8 @@ public final class ClientProfileController {
         val authentication = SecurityContextHolder.getContext().getAuthentication();
 
         val client = clientRepository.findByEmail(authentication.getName())
-                    .orElseThrow(() -> new UsernameNotFoundException(
-                            "Client not found with email: " + authentication.getName()));
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        "Client not found with email: " + authentication.getName()));
         model.addAttribute("client", client);
 
         return "/client/profile";
