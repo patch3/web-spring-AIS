@@ -2,15 +2,17 @@ package org.example.ais.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.ais.projections.ClientProjection;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 
 @Entity
 @EnableJpaRepositories
@@ -42,13 +44,6 @@ public class Client implements ClientProjection {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private Set<LoanRequestHistory> clientRequestHistory;
-
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private Set<LoanRepaymentHistory> clientRepaymentHistory;
-
-    public Client() {
-    }
 
     public Client(String fullName, String email, boolean confirmed, byte[] passportPhoto, String passwordHash) {
         this.fullName = fullName;

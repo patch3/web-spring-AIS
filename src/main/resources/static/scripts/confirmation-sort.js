@@ -31,9 +31,5 @@ function updateOption() {
     });
 }
 
-
-
 filterInput.addEventListener("input", updateOption)
 columnSelector.addEventListener("change", updateOption)
-
-

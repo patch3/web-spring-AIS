@@ -5,7 +5,33 @@
     <title>Title</title>
 </head>
 <body>
+<label>filter Input:
+    <select id="columnSelector">
+        <option selected value="fullName">Full Name</option>
+        <option value="email">Email</option>
+        <option value="age">Age</option>
+    </select>
+    <input id="filterInput" type="text"/>
+</label>
 
+<table id="search-result-table">
+    <thead>
+    <tr>
+        <th>Name load</th>
+        <th>Description</th>
+        <th>Interest rate<br>(in thousands $)</th>
+        <th>Tern (months)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="tableBody" th:each="loan : ${loans}">
+        <td th:text="${loan.name}"></td>
+        <td th:text="${loan.description}"></td>
+        <td th:text="${loan.interestRate}"></td>
+        <td th:text="${loan.loanTerm}"></td>
+    </tr>
+    </tbody>
+</table>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js" defer="defer"></script>
 </body>

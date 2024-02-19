@@ -1,14 +1,17 @@
 package org.example.ais.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 
 @Entity
 @Table(name = "loan_repayment_history")
@@ -20,22 +23,21 @@ public class LoanRepaymentHistory {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+    @JoinColumn(name = "request_history_id", nullable = false)
+    private LoanRequestHistory loanRequestHistory;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "loans_id", nullable = false)
-    private Loan loan;
-
+    @Temporal(TemporalType.DATE)
     @Column(name = "repayment_data")
     private Date repaymentData;
 
-    public LoanRepaymentHistory() {
-    }
+    @Column(name = "pay", precision = 10, scale = 2, nullable = false)
+    private BigDecimal pay;
 
-    public LoanRepaymentHistory(Client client, Loan loan, Date repaymentData) {
-        this.client = client;
-        this.loan = loan;
+    public LoanRepaymentHistory(LoanRequestHistory loanRequestHistory,
+                                Date repaymentData,
+                                BigDecimal pay) {
+        this.loanRequestHistory = loanRequestHistory;
         this.repaymentData = repaymentData;
+        this.pay = pay;
     }
 }

@@ -2,15 +2,17 @@ package org.example.ais.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Set;
 
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 
 @Entity
 @EnableJpaRepositories
@@ -29,16 +31,11 @@ public class Loan {
     @Column(name = "loan_term", nullable = false)
     private double loanTerm;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loan")
-    private Set<LoanRequestHistory> loanRequestHistory;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loan")
-    private Set<LoanRepaymentHistory> loanRepaymentHistories;
+    private Set<LoanRequestHistory> loanRequestHistories;
 
-    public Loan() {
-    }
 
     public Loan(
             String name,

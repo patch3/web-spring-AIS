@@ -1,14 +1,17 @@
 package org.example.ais.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Date;
+import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 
 @Entity
 @Table(name = "loan_request_history")
@@ -19,29 +22,19 @@ public class LoanRequestHistory {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "loans_id", nullable = false)
     private Loan loan;
 
-    @Column(name = "data_time", nullable = false)
-    private Date dataTime;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data", nullable = false)
+    private Date data;
 
-    public LoanRequestHistory() {
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loanRequestHistory") // Исправлено на "loanRequestHistory"
+    private Set<LoanRepaymentHistory> loanRepaymentHistory;
 
-    public LoanRequestHistory(
-            Client client,
-            Loan loan,
-            Date dataTime
-    ) {
-        this.client = client;
-        this.loan = loan;
-        this.dataTime = dataTime;
-    }
 }
