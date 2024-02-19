@@ -100,7 +100,7 @@ public class SecurityConfig {
                     ).logout(
                             (logout) -> logout
                                     .logoutUrl("/staff/logout")
-                                    .logoutSuccessUrl("/staff/logout/auth?logout")
+                                    .logoutSuccessUrl("/staff/login/auth?logout")
                                     .invalidateHttpSession(true)
                                     .deleteCookies("JSESSIONID")
                                     .permitAll()
@@ -158,7 +158,7 @@ public class SecurityConfig {
                             (logout) -> logout
                                     .permitAll()
                                     .logoutUrl("/client/logout")
-                                    .logoutSuccessUrl("/client/logout/process")
+                                    .logoutSuccessUrl("/login/auth?logout")
                                     .deleteCookies("JSESSIONID")
                                     .permitAll()
                     ).csrf(//Customizer.withDefaults()

@@ -13,12 +13,12 @@
         <form class="generated-form" enctype="multipart/form-data"
               method="POST" th:action="@{/staff/login/auth/process}">
 
-            <div class="errorMessage" th:if="${errorMessage}">
+            <th:block class="errorMessage" th:if="${errorMessage}">
                 <fieldset>
                     <legend>ERROR:</legend>
                     <p th:text="${errorMessage}"></p>
                 </fieldset>
-            </div>
+            </th:block>
 
 
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>

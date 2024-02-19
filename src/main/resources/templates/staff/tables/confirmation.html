@@ -36,22 +36,25 @@
             <td th:text="${client.fullName}"></td>
             <td th:text="${client.email}"></td>
             <td><a th:href="@{'/staff/img/passport/' + ${client.id}}">Go to the photo...</a></td>
-
             <td>
-                <form method="post" th:action="@{'/staff/confirmation/accept?id=' + ${client.id}}">
-                    <input hidden type="submit" value="accept"/>
+                <form method="post" action="/staff/confirmation/accept">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <input type="hidden" name="id" th:value="${client.id}"/>
+                    <input type="submit" value="accept"/>
                 </form>
             </td>
             <td>
-                <form method="post" th:action="@{'/staff/confirmation/reject?id=' + ${client.id}}">
-                    <input hidden type="submit" value="reject"/>
+                <form method="post" action="/staff/confirmation/reject">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <input type="hidden" name="id" th:value="${client.id}"/>
+                    <input type="submit" value="reject"/>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<script th:src="@{/scripts/lib/jquery-3.7.1.js}"></script>
-<script th:src="@{/scripts/confirmation-sort.js}"></script>
+<script th:src="@{/scripts/lib/jquery-3.7.1.js}" defer="defer"></script>
+<script th:src="@{/scripts/confirmation-sort.js}" defer="defer"></script>
 </body>
 </html>

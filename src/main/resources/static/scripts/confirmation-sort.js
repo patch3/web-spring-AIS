@@ -1,10 +1,13 @@
+let filterInput = document.getElementById("filterInput");
+let columnSelector = document.getElementById("columnSelector");
+
 function updateOption() {
     const column = columnSelector.value;
     const pattern = filterInput.value;
 
     $.ajax({
         url: '/staff/confirmation/filtered-data',
-        type: 'POST',
+        type: 'post',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="_csrf"]').attr('content')
         },
@@ -28,8 +31,7 @@ function updateOption() {
     });
 }
 
-let filterInput = document.getElementById("filterInput");
-let columnSelector = document.getElementById("columnSelector");
+
 
 filterInput.addEventListener("input", updateOption)
 columnSelector.addEventListener("change", updateOption)

@@ -17,8 +17,12 @@
         <p th:text="'email: ' + ${creditor.email}">
 
 
-        <form method="post" name="logoutForm" th:action="@{/staff/logout}" th:hidden="true">
-            <input hidden type="submit" value="Sign Out"/>
+            <!--        <form method="post" name="logoutForm" th:action="@{/staff/logout}" th:hidden="true">-->
+            <!--            <input hidden type="submit" value="Sign Out" />-->
+            <!--        </form>-->
+        <form method="post" th:action="@{/staff/logout}">
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+            <input type="submit" value="Sign Out"/>
         </form>
     </div>
 

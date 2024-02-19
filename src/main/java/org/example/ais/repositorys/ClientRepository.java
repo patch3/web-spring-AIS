@@ -34,7 +34,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     void confirmClientById(Long clientId);
 
 
-    /*@Transactional
+    /*
+    @Transactional
     void updateConfirmedById(Long clientId, boolean confirmed);*/
     List<Client> findByConfirmedFalse();
 
