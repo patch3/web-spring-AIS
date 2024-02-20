@@ -29,6 +29,14 @@
         <td th:text="${loan.description}"></td>
         <td th:text="${loan.interestRate}"></td>
         <td th:text="${loan.loanTerm}"></td>
+        <tb>
+            <form method="post" action="/client/loan/">
+                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                <input type="hidden" name="id" th:value="${loan.id}"/>
+                <input type="submit" value="accept"/>
+            </form>
+        </tb>
+
     </tr>
     </tbody>
 </table>
