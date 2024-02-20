@@ -29,13 +29,14 @@ function updateOption() {
         success: function (data) {
             $("#search-result-table tbody tr").remove();
             for (let i = 0; i < data.length; i++) {
+                const row = data[i]
                 $('#search-result-table > tbody:last-child').append(
                     '<tr><th scope="row">'
-                    + data[i].fullName + '</td><td>'
-                    + data[i].email + '</td><td>'
-                    + data[i].age + '</td><td>'
-                    + createHtmlSimplePostButton("/staff/confirmation/accept", id) + '</td><td>'
-                    + createHtmlSimplePostButton("/staff/confirmation/reject", id) + '</td>'
+                    + row.fullName + '</td><td>'
+                    + row.email + '</td><td>'
+                    + row.age + '</td><td>'
+                    + createHtmlSimplePostButton("/staff/confirmation/accept", row.id) + '</td><td>'
+                    + createHtmlSimplePostButton("/staff/confirmation/reject", row.id) + '</td>'
                 );
             }
         }
