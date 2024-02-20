@@ -28,7 +28,8 @@ public class ConfirmationController {
         model.addAttribute(
                 "clients",
                 clientRepository.findByConfirmedFalse(
-                        Sort.by(Sort.Direction.ASC, "fullName"
+                        Sort.by(
+                                Sort.Direction.ASC, "fullName"
                         )
                 )
         );

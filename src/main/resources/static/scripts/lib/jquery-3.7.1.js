@@ -1813,7 +1813,7 @@
                     // https://www.w3.org/TR/selectors/#pseudo-classes
                     // Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
                     // Remember that setFilters inherits from pseudos
-                    var args,
+                    let args,
                         fn = Expr.pseudos[pseudo] || Expr.setFilters[pseudo.toLowerCase()] ||
                             find.error("unsupported pseudo: " + pseudo);
 
@@ -1829,7 +1829,7 @@
                         args = [pseudo, pseudo, "", argument];
                         return Expr.setFilters.hasOwnProperty(pseudo.toLowerCase()) ?
                             markFunction(function (seed, matches) {
-                                var idx,
+                                let idx,
                                     matched = fn(seed, argument),
                                     i = matched.length;
                                 while (i--) {
@@ -1854,13 +1854,13 @@
                     // Trim the selector passed to compile
                     // to avoid treating leading and trailing
                     // spaces as combinators
-                    var input = [],
+                    const input = [],
                         results = [],
                         matcher = compile(selector.replace(rtrimCSS, "$1"));
 
                     return matcher[expando] ?
                         markFunction(function (seed, matches, _context, xml) {
-                            var elem,
+                            let elem,
                                 unmatched = matcher(seed, null, xml, []),
                                 i = seed.length;
 
@@ -1910,7 +1910,7 @@
                     }
                     lang = lang.replace(runescape, funescape).toLowerCase();
                     return function (elem) {
-                        var elemLang;
+                        let elemLang;
                         do {
                             if ((elemLang = documentIsHTML ?
                                 elem.lang :
@@ -7627,12 +7627,12 @@
                 .end().animate({opacity: to}, speed, easing, callback);
         },
         animate: function (prop, speed, easing, callback) {
-            var empty = jQuery.isEmptyObject(prop),
+            const empty = jQuery.isEmptyObject(prop),
                 optall = jQuery.speed(speed, easing, callback),
                 doAnimation = function () {
 
                     // Operate on a copy of prop so per-property easing won't be lost
-                    var anim = Animation(this, jQuery.extend({}, prop), optall);
+                    const anim = Animation(this, jQuery.extend({}, prop), optall);
 
                     // Empty animations, or finishing resolves immediately
                     if (empty || dataPriv.get(this, "finish")) {
@@ -7647,8 +7647,8 @@
                 this.queue(optall.queue, doAnimation);
         },
         stop: function (type, clearQueue, gotoEnd) {
-            var stopQueue = function (hooks) {
-                var stop = hooks.stop;
+            const stopQueue = function (hooks) {
+                const stop = hooks.stop;
                 delete hooks.stop;
                 stop(gotoEnd);
             };
@@ -10646,9 +10646,7 @@
     }
 
 
-    var
-
-        // Map over jQuery in case of overwrite
+    const // Map over jQuery in case of overwrite
         _jQuery = window.jQuery,
 
         // Map over the $ in case of overwrite
