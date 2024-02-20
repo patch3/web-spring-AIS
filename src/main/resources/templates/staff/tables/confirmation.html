@@ -33,7 +33,7 @@
         </thead>
         <tbody>
         <tr id="tableBody" th:each="client : ${clients}">
-            <td th:text="${client.fullName}"></td>
+            <td><th th:text="${client.fullName}" scope="row"></th>
             <td th:text="${client.email}"></td>
             <td><a th:href="@{'/staff/img/passport/' + ${client.id}}">Go to the photo...</a></td>
             <td>
