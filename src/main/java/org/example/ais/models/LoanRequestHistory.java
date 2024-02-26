@@ -3,6 +3,7 @@ package org.example.ais.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Date;
@@ -35,6 +36,10 @@ public class LoanRequestHistory {
     @Temporal(TemporalType.DATE)
     @Column(name = "data", nullable = false)
     private Date data;
+
+    @ColumnDefault("false")
+    @Column(name = "closed", nullable = false)
+    private boolean closed;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loanRequestHistory")
     private Set<LoanRepaymentHistory> loanRepaymentHistory;

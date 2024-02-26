@@ -37,7 +37,7 @@
         <tr id="tableBody" th:each="loan : ${loans}">
             <td th:text="${loan.name}"></td>
             <td th:text="${loan.interestRate}"></td>
-            <td th:text="${loan.loanTerm}"></td>
+            <td th:text="${loan.term}"></td>
             <td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>
         </tr>
         </tbody>

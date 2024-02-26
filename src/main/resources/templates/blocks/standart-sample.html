@@ -19,32 +19,7 @@
         <h1 class="display-4 text-center">Smart Bank</h1>
     </div>
 </header>
-<!--
-<nav th:fragment="nav" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <a th:href="@{/home}">Home</a>
 
-    <div sec:authorize="isAnonymous()">
-        <div class="right-nav">
-            <a th:href="@{/client/login/auth}">Login</a>
-        </div>
-    </div>
-
-    <th:block sec:authorize="hasRole('ROLE_STAFF')">
-        <a href="/staff/confirmation">Confirmation</a>
-
-        <div class="right-nav">
-            <a th:href="@{/staff/profile}" th:text="${#authentication.principal.username}"></a>
-        </div>
-    </th:block>
-
-    <th:block sec:authorize="hasRole('ROLE_CLIENT')">
-        <a href="/client/loans">Credits</a>
-
-        <div class="right-nav">
-            <a th:href="@{/client/profile}" th:text="${#authentication.principal.username}"></a>
-        </div>
-    </th:block>
-</nav>-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav"
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <a class="navbar-brand" th:href="@{/home}">Home</a>

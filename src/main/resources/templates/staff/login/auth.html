@@ -24,8 +24,6 @@
             <form class="generated-form" enctype="multipart/form-data" method="POST"
                   th:action="@{/staff/login/auth/process}">
 
-
-
                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
 
                 <label for="email">Email:</label>
@@ -41,7 +39,7 @@
 
                 <a class="btn btn-link" th:href="@{/client/login/auth}">Auth for client</a>
                 <br>
-                <button class="btn btn-primary" type="submit">Authenticate</button>
+                <button>Authenticate</button>
                 <br><br>
             </form>
         </div>

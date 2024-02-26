@@ -38,7 +38,5 @@ public class LoanRepaymentHistory {
     @Column(name = "pay", precision = 10, scale = 2, nullable = false)
     private BigDecimal pay;
 
-    @ColumnDefault("false")
-    @Column(name = "closed", nullable = false)
-    private boolean closed;
+
 }
