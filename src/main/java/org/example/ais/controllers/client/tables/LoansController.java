@@ -33,13 +33,13 @@ public class LoansController {
     @RequestMapping
     @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LoanProjection> filteredData(
-            @RequestParam(name = "column") String column,
-            @RequestParam(name = "patternName") String patternName,
-            @RequestParam(name = "patternInterestRate") Double patternInterestRate,
-            @RequestParam(name = "patternTerm") Double patternTerm
-    ) {
+            @RequestParam String columnFilter,
+            @RequestParam String patternName,
+            @RequestParam Double patternRate,
+            @RequestParam Double patternTerm
+    ) {am
         return loanRepository.findProjectionByNameStartingWithAndInterestRateStartingWithAndTermStartingWith(
-                patternName, patternInterestRate, patternTerm, Sort.by(Sort.Direction.ASC, column)
+                patternName, patternRate, patternTerm, Sort.by(Sort.Direction.ASC, columnFilter)
         );
     }
 }

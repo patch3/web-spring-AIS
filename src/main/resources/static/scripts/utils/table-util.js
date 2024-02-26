@@ -42,7 +42,7 @@ function updateOptionTableEvent(url, successFun) {
                 column: column,
                 pattern: pattern
             },
-            success: function (data) { // Call successFun with the server response
+            success: function (data) {
                 successFun(data);
             }
         });

@@ -13,8 +13,8 @@ function updateTableEvent() {
         type: 'post',
         data: {
             columnFilter: columnSelector.value,
-            filterInputFullName: filterInputFullName.value,
-            filterInputEmail: filterInputEmail.value
+            patternFullName: filterInputFullName.value,
+            patternEmail: filterInputEmail.value
         },
         success: function (data) {
             $("#search-result-table tbody tr").empty();

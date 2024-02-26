@@ -51,12 +51,12 @@ public class ConfirmationController {
     @ResponseBody
     @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ClientProjection> filteredData(
-            @RequestParam String column,
+            @RequestParam String columnFilter,
             @RequestParam String patternFullName,
             @RequestParam String patternEmail
     ) {
         return clientRepository.findProjectionByFullNameStartingWithAndEmailStartingWithAndConfirmedFalse(
-                patternFullName, patternEmail, Sort.by(Sort.Direction.ASC, column)
+                patternFullName, patternEmail, Sort.by(Sort.Direction.ASC, columnFilter)
         );
     }
 }

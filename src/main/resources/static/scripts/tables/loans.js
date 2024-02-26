@@ -16,9 +16,9 @@ function updateTableEvent() {
         type: 'post',
         data: {
             columnFilter: columnSelector.value,
-            filterInputName: filterInputName.value,
-            filterInputRate: filterInputRate.value,
-            filterInputTern: filterInputTern.value,
+            patternName: filterInputName.value,
+            patternRate: filterInputRate.value,
+            patternTerm: filterInputTern.value,
         },
         success: function (data) {
             $("#search-result-table tbody tr").empty();

@@ -16,8 +16,7 @@ public final class StaffAuthController {
             Model model
     ) {
         model.addAttribute("namePage", "Auth creditor");
-        if (error)
-            model.addAttribute("errorMessage", "authorization failed");
+        if (error) model.addAttribute("errorMessage", "authorization failed");
         return "/staff/login/auth";
     }
 }
