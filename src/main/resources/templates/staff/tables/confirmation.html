@@ -7,54 +7,110 @@
 <header th:replace="~{blocks/standart-sample :: header}"></header>
 <nav th:replace="~{blocks/standart-sample :: nav}"></nav>
 
-<div class="content">
+<!--<div class="content">
     <div class="context-info">
         <h2>Creditors</h2>
     </div>
 
-    <label>filter Input:
-        <select id="columnSelector">
-            <option selected value="fullName">Full Name</option>
-            <option value="email">Email</option>
-            <option value="age">Age</option>
-        </select>
-        <input id="filterInput" type="text"/>
-    </label>
+    <label for="columnSelector"></label>
+    <select id="columnSelector" placeholder="Select filter">
+        <option value="fullName">Full name</option>
+        <option value="email">Email</option>
+    </select>
 
     <table id="search-result-table">
         <thead>
+            <tr>
+                <td><input id="filterInputFullName" type="text"/></td>
+                <td><input id="filterInputEmail" type="text"/></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Password photo</th>
+                <th>accept</th>
+                <th>reject</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="tableBody" th:each="client : ${clients}">
+                <th scope="row" th:text="${client.fullName}"></th>
+                <td th:text="${client.email}"></td>
+                <td><a th:href="@{'/staff/img/passport/' + ${client.id}}">Go to the photo...</a></td>
+                <td>
+                    <form method="post" action="/staff/confirmation/accept">
+                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <input type="hidden" name="id" th:value="${client.id}"/>
+                        <input type="submit" value="accept"/>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="/staff/confirmation/reject">
+                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <input type="hidden" name="id" th:value="${client.id}"/>
+                        <input type="submit" value="reject"/>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>-->
+
+<div class="content">
+    <div class="context-info bg-primary text-white py-4">
+        <div class="container">
+            <h2 class="display-4 text-center">Creditors</h2>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="columnSelector">Select filter</label>
+        <select class="form-control" id="columnSelector">
+            <option value="fullName">Full name</option>
+            <option value="email">Email</option>
+        </select>
+    </div>
+
+    <table class="table table-striped" id="search-result-table">
+        <thead>
         <tr>
-            <th>Full name</th>
-            <th>Email</th>
-            <th>Password photo</th>
-            <th>accept</th>
-            <th>reject</th>
+            <th><input class="form-control" id="filterInputFullName" placeholder="Full name" type="text"/></th>
+            <th><input class="form-control" id="filterInputEmail" placeholder="Email" type="text"/></th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr id="tableBody" th:each="client : ${clients}">
-            <td><th th:text="${client.fullName}" scope="row"></th>
+            <td th:text="${client.fullName}"></td>
             <td th:text="${client.email}"></td>
             <td><a th:href="@{'/staff/img/passport/' + ${client.id}}">Go to the photo...</a></td>
             <td>
-                <form method="post" action="/staff/confirmation/accept">
+                <form action="/staff/confirmation/accept" method="post">
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                    <input type="hidden" name="id" th:value="${client.id}"/>
-                    <input type="submit" value="accept"/>
+                    <input name="id" th:value="${client.id}" type="hidden"/>
+                    <button class="btn btn-success" type="submit">Accept</button>
                 </form>
             </td>
             <td>
-                <form method="post" action="/staff/confirmation/reject">
+                <form action="/staff/confirmation/reject" method="post">
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                    <input type="hidden" name="id" th:value="${client.id}"/>
-                    <input type="submit" value="reject"/>
+                    <input name="id" th:value="${client.id}" type="hidden"/>
+                    <button class="btn btn-danger" type="submit">Reject</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
 <script th:src="@{/scripts/lib/jquery-3.7.1.js}" defer="defer"></script>
-<script th:src="@{/scripts/confirmation-sort.js}" defer="defer"></script>
+<script defer="defer" th:src="@{/scripts/security-request.js}"></script>
+<script defer="defer" th:src="@{/scripts/utils/table-util.js}"></script>
+<script defer="defer" th:src="@{/scripts/tables/confirmation-sort.js}"></script>
 </body>
 </html>

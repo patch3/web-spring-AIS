@@ -20,5 +20,4 @@ public final class StaffAuthController {
             model.addAttribute("errorMessage", "authorization failed");
         return "/staff/login/auth";
     }
-
 }

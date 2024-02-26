@@ -13,22 +13,22 @@
 
 <div class="content">
     <div class="context-info">
-        <!--/*@thymesVar id="error" type="org.example.ais.models.Creditor"*/-->
-        <p th:text="'email: ' + ${creditor.email}">
+        <p th:text="'email: ' + ${creditor.email}"></p>
 
-
-            <!--        <form method="post" name="logoutForm" th:action="@{/staff/logout}" th:hidden="true">-->
-            <!--            <input hidden type="submit" value="Sign Out" />-->
-            <!--        </form>-->
         <form method="post" th:action="@{/staff/logout}">
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-            <input type="submit" value="Sign Out"/>
+            <button class="btn btn-primary btn-sm btn-block" type="submit">Sign Out</button>
         </form>
     </div>
 
     <div class="item">
-        <p>Confirmation: <a th:href="@{/staff/confirmation}">page to go</a></p>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" th:href="@{/staff/confirmation}">Page to go
+                confirmation</a>
+            <a class="list-group-item list-group-item-action" th:href="@{/staff/confirmation}">Page to go</a>
+        </div>
     </div>
 </div>
+
 </body>
 </html>

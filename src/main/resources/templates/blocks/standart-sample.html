@@ -7,12 +7,19 @@
     <!-- default header name is X-CSRF-TOKEN -->
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" th:href="@{/styles/style.css}" type="text/css">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<header th:fragment="header">
-    <h1>Smart Bank</h1>
+<header class="bg-primary text-white py-4" th:fragment="header">
+    <div class="container">
+        <h1 class="display-4 text-center">Smart Bank</h1>
+    </div>
 </header>
-
+<!--
 <nav th:fragment="nav" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <a th:href="@{/home}">Home</a>
 
@@ -26,7 +33,7 @@
         <a href="/staff/confirmation">Confirmation</a>
 
         <div class="right-nav">
-            <a th:href="@{/profile}" th:text="${#authentication.principal.username}"></a>
+            <a th:href="@{/staff/profile}" th:text="${#authentication.principal.username}"></a>
         </div>
     </th:block>
 
@@ -34,18 +41,47 @@
         <a href="/client/loans">Credits</a>
 
         <div class="right-nav">
-            <a th:href="@{/profile}" th:text="${#authentication.principal.username}"></a>
+            <a th:href="@{/client/profile}" th:text="${#authentication.principal.username}"></a>
         </div>
     </th:block>
+</nav>-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <a class="navbar-brand" th:href="@{/home}">Home</a>
 
-    <div class="right-nav">
+    <th:block sec:authorize="isAnonymous()">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/client/login/auth}">Login</a>
+            </li>
+        </ul>
+    </th:block>
 
+    <th:block sec:authorize="hasRole('ROLE_STAFF')">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/staff/confirmation">Confirmation</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto right-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/staff/profile}" th:text="${#authentication.principal.username}"></a>
+            </li>
+        </ul>
+    </th:block>
 
-
-        <div sec:authorize="isAnonymous()">
-            <a th:href="@{/client/login/auth}">Login</a>
-        </div>
-    </div>
+    <th:block sec:authorize="hasRole('ROLE_CLIENT')">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/client/loans">Credits</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto right-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/client/profile}" th:text="${#authentication.principal.username}"></a>
+            </li>
+        </ul>
+    </th:block>
 </nav>
 
 

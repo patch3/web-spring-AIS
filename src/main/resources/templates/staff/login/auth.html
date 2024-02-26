@@ -8,34 +8,44 @@
 <nav th:replace="~{blocks/standart-sample :: nav}"></nav>
 
 <div class="content">
-    <fieldset>
-        <legend>Staff:</legend>
-        <form class="generated-form" enctype="multipart/form-data"
-              method="POST" th:action="@{/staff/login/auth/process}">
+    <div class="card">
+        <div class="card-header">
+            <legend>Staff:</legend>
+        </div>
 
-            <th:block class="errorMessage" th:if="${errorMessage}">
-                <fieldset>
-                    <legend>ERROR:</legend>
-                    <p th:text="${errorMessage}"></p>
-                </fieldset>
-            </th:block>
+        <th:block class="errorMessage" th:if="${errorMessage}">
+            <div class="alert alert-danger" role="alert">
+                <legend>ERROR:</legend>
+                <p th:text="${errorMessage}"></p>
+            </div>
+        </th:block>
+
+        <div class="card-body">
+            <form class="generated-form" enctype="multipart/form-data" method="POST"
+                  th:action="@{/staff/login/auth/process}">
 
 
-            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-            <label for="email">Email:</label>
-            <input id="email" name="username" type="email">
-            <label for="password">Password:</label>
-            <input id="password" name="password" type="password">
-            <label for="remember-me">Remember me:
-                <input id="remember-me" name="remember-me" type="checkBox"/>
-            </label>
 
-            <a th:href="@{/client/login/auth}">auth for client</a>
+                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
 
-            <button>authenticate</button>
-            <br>
-        </form>
-    </fieldset>
+                <label for="email">Email:</label>
+                <input class="form-control" id="email" name="username" type="email">
+
+                <label for="password">Password:</label>
+                <input class="form-control" id="password" name="password" type="password">
+
+                <div class="form-group form-check">
+                    <label for="remember-me">Remember me</label>
+                    <input class="form-check-input" id="remember-me" name="remember-me" type="checkbox">
+                </div>
+
+                <a class="btn btn-link" th:href="@{/client/login/auth}">Auth for client</a>
+                <br>
+                <button class="btn btn-primary" type="submit">Authenticate</button>
+                <br><br>
+            </form>
+        </div>
+    </div>
 </div>
 
 </body>

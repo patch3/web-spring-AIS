@@ -17,23 +17,26 @@
             </fieldset>
         </th:block>
 
-        <form class="generated-form" enctype="multipart/form-data"
-              method="POST" th:action="@{/client/login/auth/process}">
+        <form class="generated-form" enctype="multipart/form-data" method="POST"
+              th:action="@{/client/login/auth/process}">
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+
             <label for="email">Email:</label>
             <input id="email" name="username" type="email">
+
             <label for="password">Password:</label>
             <input id="password" name="password" type="password">
-            <label for="remember-me">Remember me:
-                <input id="remember-me" name="remember-me" type="checkBox"/>
-            </label>
+
+            <div class="form-group form-check">
+                <label for="remember-me">Remember me</label>
+                <input class="form-check-input" id="remember-me" name="remember-me" type="checkbox">
+            </div>
 
             <a th:href="@{/client/login/reg}">registration</a>
             <br>
             <a th:href="@{/staff/login/auth}">auth for staff</a>
             <br>
-
-            <button>authenticate</button>
+            <button>Authenticate</button>
             <br><br>
         </form>
     </fieldset>

@@ -46,7 +46,7 @@ nav a:hover {
     background-color: aqua;
     border-bottom: 1px solid black;
     width: 100%;
-
+    margin: 5px;
 }
 
 .item {
@@ -55,6 +55,7 @@ nav a:hover {
     flex-direction: column;
     width: 100%;
     background-color: aquamarine;
+    margin: 5px;
 }
 
 .generated-form {

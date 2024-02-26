@@ -2,14 +2,16 @@ package org.example.ais.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * модель таблицы
+ * История всех кредитов
+ */
 @Data
 @NoArgsConstructor
 
@@ -34,7 +36,7 @@ public class LoanRequestHistory {
     @Column(name = "data", nullable = false)
     private Date data;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loanRequestHistory") // Исправлено на "loanRequestHistory"
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loanRequestHistory")
     private Set<LoanRepaymentHistory> loanRepaymentHistory;
 
 }

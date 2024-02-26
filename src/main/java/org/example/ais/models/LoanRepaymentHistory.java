@@ -2,13 +2,18 @@ package org.example.ais.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+/**
+ * Модель таблицы
+ * История выплат кредитов
+ */
+
 
 @Data
 @NoArgsConstructor
@@ -27,17 +32,13 @@ public class LoanRepaymentHistory {
     private LoanRequestHistory loanRequestHistory;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "repayment_data")
+    @Column(name = "repayment_data", nullable = false)
     private Date repaymentData;
 
     @Column(name = "pay", precision = 10, scale = 2, nullable = false)
     private BigDecimal pay;
 
-    public LoanRepaymentHistory(LoanRequestHistory loanRequestHistory,
-                                Date repaymentData,
-                                BigDecimal pay) {
-        this.loanRequestHistory = loanRequestHistory;
-        this.repaymentData = repaymentData;
-        this.pay = pay;
-    }
+    @ColumnDefault("false")
+    @Column(name = "closed", nullable = false)
+    private boolean closed;
 }

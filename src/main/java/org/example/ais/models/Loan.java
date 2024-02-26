@@ -3,9 +3,8 @@ package org.example.ais.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.example.ais.projections.LoanProjection;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Set;
@@ -17,19 +16,19 @@ import java.util.Set;
 @Entity
 @EnableJpaRepositories
 @Table(name = "loan")
-public class Loan {
+public class Loan implements LoanProjection {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
     @Column(name = "interest_rate", nullable = false)
-    private double interestRate;
-    @Column(name = "loan_term", nullable = false)
-    private double loanTerm;
+    private Double interestRate;
+    @Column(name = "term", nullable = false)
+    private Double term;
 
 
     @JsonIgnore
@@ -37,15 +36,16 @@ public class Loan {
     private Set<LoanRequestHistory> loanRequestHistories;
 
 
-    public Loan(
-            String name,
-            String description,
-            double interestRate,
-            double loanTerm
-    ) {
+    public Loan(String name, String description, Double interestRate, Double term) {
         this.name = name;
         this.description = description;
         this.interestRate = interestRate;
-        this.loanTerm = loanTerm;
+        this.term = term;
+    }
+
+    public Loan(String name, Double interestRate, Double term) {
+        this.name = name;
+        this.interestRate = interestRate;
+        this.term = term;
     }
 }

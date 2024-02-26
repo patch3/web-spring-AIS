@@ -43,7 +43,9 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @NonNull
     List<Client> findByConfirmedFalse(Sort sort);
 
-    List<ClientProjection> findProjectionByFullNameStartingWithAndConfirmedFalse(String prefix, Sort sort);
+    List<ClientProjection> findProjectionByFullNameStartingWithAndEmailStartingWithAndConfirmedFalse(
+            String patternFullName, String patternEmail, Sort sort
+    );
 
     void deleteById(@NonNull Long id);
 }

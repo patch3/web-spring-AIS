@@ -1,12 +1,11 @@
 package org.example.ais.repositorys;
 
 import org.example.ais.models.Loan;
+import org.example.ais.projections.LoanProjection;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,5 +15,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     @NonNull
     List<Loan> findAll();
 
-
+    List<LoanProjection> findProjectionByNameStartingWithAndInterestRateStartingWithAndTermStartingWith(
+            String patternName, Double patternInterestRate, Double patternTerm, Sort sort
+    );
 }

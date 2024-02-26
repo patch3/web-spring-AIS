@@ -3,10 +3,9 @@ package org.example.ais.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.example.ais.projections.ClientProjection;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Set;
@@ -30,6 +29,7 @@ public class Client implements ClientProjection {
     private String email;
 
     @Column(name = "confirmed", nullable = false)
+    @ColumnDefault("false")
     private boolean confirmed;
 
     @Lob
