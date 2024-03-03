@@ -19,7 +19,6 @@ import java.util.List;
 @Lazy
 @Service
 public abstract class LoanService implements LoanRepository {
-
     private final static String PREFFIX = "Loan";
     private final LoanRepository loanRepository;
 
@@ -28,8 +27,6 @@ public abstract class LoanService implements LoanRepository {
     public LoanService(LoanRepository loanRepository) {
         this.loanRepository = loanRepository;
     }
-
-
 
 
     public byte[] exportToExcel() throws IOException {
@@ -77,9 +74,6 @@ public abstract class LoanService implements LoanRepository {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         workbook.write(outputStream);
         workbook.close();
-
-
-
 
 
         return outputStream.toByteArray();
