@@ -46,5 +46,6 @@ public class ExcelFileExporter {
         cellStyle.setBottomBorderColor(IndexedColors.BLACK.index);
         cellStyle.setBorderLeft(BorderStyle.THIN);
         cellStyle.setLeftBorderColor(IndexedColors.BLACK.index);
+        return cellStyle;
     }
 }

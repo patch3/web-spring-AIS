@@ -1,8 +1,8 @@
 package org.example.ais.services;
 
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import lombok.val;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -32,39 +32,57 @@ public abstract class LoanService implements LoanRepository {
 
 
 
-    public ByteArrayOutputStream exportToExcel() throws IOException {
-        List<Loan> loanList = loanRepository.findAll();
+    public byte[] exportToExcel() throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet(PREFFIX);
 
-        XSSFWorkbook workbook = new XSSFWorkbook();
+        // Заполняем шапку таблицы
+        Row row = sheet.createRow(0);
+        row.createCell(0).setCellValue("ID");
+        row.createCell(1).setCellValue("Name");
+        row.createCell(2).setCellValue("Description");
+        row.createCell(3).setCellValue("Term");
+        row.createCell(4).setCellValue("InterestRate");
 
-        XSSFSheet sheet = workbook.createSheet(PREFFIX);
-
-        // Создание шапки таблицы
-        XSSFRow headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("Name");
-        headerRow.createCell(1).setCellValue("Position");
-
-
-
+        // Заполняем данные из базы данных
         int rowNum = 1;
-        for (Loan loan : loanList) {
-            XSSFRow row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(loan.getName());
-            row.createCell(1).setCellValue(loan.getInterestRate());
-            row.createCell(2).setCellValue(loan.getTerm());
+        List<Loan> loans = loanRepository.findAll();
+        for (val entity : loans) {
+            Row dataRow = sheet.createRow(rowNum++);
+            dataRow.createCell(0).setCellValue(entity.getId());
+            dataRow.createCell(1).setCellValue(entity.getName());
+            dataRow.createCell(2).setCellValue(entity.getDescription());
+
+
+            // Форматируем ячейки для процентных значений и валютных значений
+            Cell percentageCell = dataRow.createCell(3);
+            percentageCell.setCellValue(entity.getTerm());
+
+            // Устанавливаем формат ячейки для процентных значений
+            DataFormat format = workbook.createDataFormat();
+            CellStyle percentageStyle = workbook.createCellStyle();
+            percentageStyle.setDataFormat(format.getFormat("0.00%"));
+            percentageCell.setCellStyle(percentageStyle);
+
+
+            Cell currencyCell = dataRow.createCell(4);
+            currencyCell.setCellValue(entity.getInterestRate());
+
+            // Устанавливаем формат ячейки для валютных значений
+            CellStyle currencyStyle = workbook.createCellStyle();
+            currencyStyle.setDataFormat(format.getFormat("[$RU-ru] # ##0.00"));
+            currencyCell.setCellStyle(currencyStyle);
         }
 
-        // Установка заголовка ответа и тип содержимого
-        response.setHeader("Content-Disposition", "attachment; filename=employees.xlsx");
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-
-        // Создание ByteArrayOutputStream для хранения файла Excel
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         workbook.write(outputStream);
         workbook.close();
 
 
-        return outputStream;
+
+
+
+        return outputStream.toByteArray();
     }
 
 }
