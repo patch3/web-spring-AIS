@@ -2,6 +2,7 @@ package org.example.ais.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.ais.projections.ClientProjection;
@@ -12,11 +13,14 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @EnableJpaRepositories
 @Table(name = "client")
-public class Client implements ClientProjection {
+public class Client implements IModel, ClientProjection {
+    public static final String COLUMN_NAME = "email";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -45,11 +49,21 @@ public class Client implements ClientProjection {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private Set<LoanRequestHistory> clientRequestHistory;
 
-    public Client(String fullName, String email, boolean confirmed, byte[] passportPhoto, String passwordHash) {
+    public Client(String fullName,
+                  String email,
+                  boolean confirmed,
+                  byte[] passportPhoto,
+                  String passwordHash
+    ) {
         this.fullName = fullName;
         this.email = email;
         this.confirmed = confirmed;
         this.passportPhoto = passportPhoto;
         this.passwordHash = passwordHash;
+    }
+
+    @Override
+    public String getDefaultColumnName() {
+        return COLUMN_NAME;
     }
 }

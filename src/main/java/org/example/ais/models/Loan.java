@@ -16,7 +16,10 @@ import java.util.Set;
 @Entity
 @EnableJpaRepositories
 @Table(name = "loan")
-public class Loan implements LoanProjection {
+public class Loan implements IModel, LoanProjection {
+
+    public static final String COLUMN_NAME = "name";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -47,5 +50,10 @@ public class Loan implements LoanProjection {
         this.name = name;
         this.interestRate = interestRate;
         this.term = term;
+    }
+
+    @Override
+    public String getDefaultColumnName() {
+        return COLUMN_NAME;
     }
 }

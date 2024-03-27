@@ -2,9 +2,7 @@ package org.example.ais.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
@@ -14,7 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Entity
 @EnableJpaRepositories
 @Table(name = "creditor")
-public class Creditor {
+public class Creditor implements IModel {
+    public static final String COLUMN_NAME = "email";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,5 +29,10 @@ public class Creditor {
     public Creditor(String workEmail, String passwordHash) {
         this.email = workEmail;
         this.passwordHash = passwordHash;
+    }
+
+    @Override
+    public String getDefaultColumnName() {
+        return COLUMN_NAME;
     }
 }

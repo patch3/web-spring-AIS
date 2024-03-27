@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{blocks/standart-sample :: head}"></head>
+<body>
+
+<header th:replace="~{blocks/standart-sample :: header}"></header>
+<nav th:replace="~{blocks/standart-sample :: nav}"></nav>
+
+
+<div class="content">
+    <table class="table table-striped" id="search-result-table">
+        <thead>
+            <tr>
+                <th>Name load</th>
+                <th>Interest rate<br>(in thousands $)</th>
+                <th>Tern (months)</th>
+                <th>Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="tableBody" th:each="loan : ${loans}">
+                <td th:text="${loan.name}"></td>
+                <td th:text="${loan.interestRate}"></td>
+                <td th:text="${loan.loanTerm}"></td>
+                <td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

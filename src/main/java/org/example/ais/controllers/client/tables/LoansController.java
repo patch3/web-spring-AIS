@@ -1,12 +1,14 @@
 package org.example.ais.controllers.client.tables;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.example.ais.projections.LoanProjection;
-import org.example.ais.repositorys.LoanRepository;
 import org.example.ais.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,26 +16,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/client/loans")
 public class LoansController {
-    private final LoanRepository loanRepository;
-
     private final LoanService loanService;
 
     @Autowired
-    public LoansController(LoanRepository loanRepository, LoanService loanService) {
-        this.loanRepository = loanRepository;
+    public LoansController(LoanService loanService) {
         this.loanService = loanService;
+    }
+
+    public static ResponseEntity<Resource> getResourceResponseEntity(LoanService loanService) throws IOException {
+        byte[] data = loanService.exportToExcel();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=data.xlsx");
+
+        Resource resource = new ByteArrayResource(data);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(data.length)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
     }
 
     @GetMapping
     public String loansPage(Model model) {
-        model.addAttribute("loans", loanRepository.findAll());
+        model.addAttribute("loans", loanService.findAll());
         return "/client/tables/loans";
     }
 
@@ -45,15 +58,18 @@ public class LoansController {
             @RequestParam Double patternRate,
             @RequestParam Double patternTerm
     ) {
-        return loanRepository.findProjectionByNameStartingWithAndInterestRateStartingWithAndTermStartingWith(
+        return loanService.findProjectionByStartWith(
                 patternName, patternRate, patternTerm, Sort.by(Sort.Direction.ASC, columnFilter)
         );
     }
 
     @PostMapping("/remove")
     public void removeEntry(@RequestParam Long id) {
-        loanRepository.deleteById(id);
+        loanService.delete(id);
     }
 
-
+    @GetMapping("/export")
+    public ResponseEntity<Resource> export() throws IOException {
+        return getResourceResponseEntity(loanService);
+    }
 }
