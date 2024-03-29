@@ -15,7 +15,8 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     @NonNull
     List<Loan> findAll();
 
-    List<LoanProjection> findProjectionByNameStartingWithAndInterestRateStartingWithAndTermStartingWith(
-            String patternName, Double patternInterestRate, Double patternTerm, Sort sort
+    List<LoanProjection>
+    findProjectionByNameStartingWithAndDurationInMonthsStartingWithAndInterestRateStartingWithAndAmountStartingWith(
+            String patternName, Integer durationInMonths, Float interestRate, Long amount, Sort sort
     );
 }

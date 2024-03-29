@@ -5,7 +5,11 @@ public interface LoanProjection {
 
     String getName();
 
-    Double getInterestRate();
+    String getDescription();
 
-    Double getTerm();
+    Float getInterestRate();
+
+    Double getAmount();
+
+    Integer getDurationInMonths();
 }

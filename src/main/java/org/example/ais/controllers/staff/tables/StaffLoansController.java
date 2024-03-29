@@ -1,6 +1,5 @@
 package org.example.ais.controllers.staff.tables;
 
-import lombok.val;
 import org.example.ais.models.Loan;
 import org.example.ais.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +30,12 @@ public class StaffLoansController {
     @GetMapping
     public String staffLoansPage(Model model) {
         model.addAttribute("namePage", "Staff loans table");
+        model.addAttribute("loans", loanService.findAll());
         return "/staff/tables/loans";
     }
 
     @PostMapping("/add")
-    public void addEntry(
-            @RequestParam String name,
-            @RequestParam String description,
-            @RequestParam Double interestRate,
-            @RequestParam Double term
-    ) {
-        val loan = new Loan(name, description, interestRate, term);
+    public void addEntry(@RequestParam Loan loan) {
         loanService.save(loan);
     }
 

@@ -16,8 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 @Lazy
 public final class CreditorDetailsServiceImpl implements UserDetailsService {
+
     private final CreditorRepository creditorRepository;
+
     private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public CreditorDetailsServiceImpl(CreditorRepository creditorRepository, PasswordEncoder passwordEncoder) {

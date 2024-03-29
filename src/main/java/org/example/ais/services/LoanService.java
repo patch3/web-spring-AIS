@@ -37,8 +37,9 @@ public class LoanService {
         row.createCell(0).setCellValue("ID");
         row.createCell(1).setCellValue("Name");
         row.createCell(2).setCellValue("Description");
-        row.createCell(3).setCellValue("InterestRate");
-        row.createCell(4).setCellValue("Term");
+        row.createCell(3).setCellValue("Duration (in months)");
+        row.createCell(4).setCellValue("InterestRate");
+        row.createCell(5).setCellValue("Amount");
 
         // Заполняем данные из базы данных
         int rowNum = 1;
@@ -48,22 +49,13 @@ public class LoanService {
             dataRow.createCell(0).setCellValue(entity.getId());
             dataRow.createCell(1).setCellValue(entity.getName());
             dataRow.createCell(2).setCellValue(entity.getDescription());
+            dataRow.createCell(3).setCellValue(entity.getDurationInMonths());
 
-
-            Cell currencyCell = dataRow.createCell(3);
-            currencyCell.setCellValue(entity.getInterestRate());
 
             DataFormat format = workbook.createDataFormat();
-
-            // Устанавливаем формат ячейки для валютных значений
-            CellStyle currencyStyle = workbook.createCellStyle();
-            currencyStyle.setDataFormat(format.getFormat("[$RU-ru] # ##0.00"));
-            currencyCell.setCellStyle(currencyStyle);
-
-
             // Форматируем ячейки для процентных значений и валютных значений
             Cell percentageCell = dataRow.createCell(4);
-            percentageCell.setCellValue(entity.getTerm());
+            percentageCell.setCellValue(entity.getInterestRate());
 
             // Устанавливаем формат ячейки для процентных значений
             CellStyle percentageStyle = workbook.createCellStyle();
@@ -71,7 +63,13 @@ public class LoanService {
             percentageCell.setCellStyle(percentageStyle);
 
 
+            Cell currencyCell = dataRow.createCell(5);
+            currencyCell.setCellValue(entity.getAmount());
 
+            // Устанавливаем формат ячейки для валютных значений
+            CellStyle currencyStyle = workbook.createCellStyle();
+            currencyStyle.setDataFormat(format.getFormat("[$RU-ru] 00.0"));
+            currencyCell.setCellStyle(currencyStyle);
         }
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -95,18 +93,11 @@ public class LoanService {
 
 
     public List<LoanProjection> findProjectionByStartWith(
-            String patternName, Double patternInterestRate, Double patternTerm
+            String patternName, Integer patternDuration, Float patternInterestRate, Long patternAmount, Sort sort
     ) {
-        return loanRepository.findProjectionByNameStartingWithAndInterestRateStartingWithAndTermStartingWith(
-                patternName, patternInterestRate, patternTerm, Sort.by(Sort.Direction.ASC, Loan.COLUMN_NAME)
-        );
-    }
-
-    public List<LoanProjection> findProjectionByStartWith(
-            String patternName, Double patternInterestRate, Double patternTerm, Sort sort
-    ) {
-        return loanRepository.findProjectionByNameStartingWithAndInterestRateStartingWithAndTermStartingWith(
-                patternName, patternInterestRate, patternTerm, sort
+        return loanRepository
+                .findProjectionByNameStartingWithAndDurationInMonthsStartingWithAndInterestRateStartingWithAndAmountStartingWith(
+                patternName, patternDuration, patternInterestRate , patternAmount, sort
         );
     }
 }

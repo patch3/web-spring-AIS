@@ -2,6 +2,7 @@ package org.example.ais.controllers.client.tables;
 
 import org.example.ais.projections.LoanProjection;
 import org.example.ais.services.LoanService;
+import org.hibernate.type.NullType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -45,7 +46,11 @@ public class LoansController {
     }
 
     @GetMapping
-    public String loansPage(Model model) {
+    public String loansPage(
+            @RequestParam(value = "error", required = false) NullType error,
+            Model model
+    ) {
+
         model.addAttribute("loans", loanService.findAll());
         return "/client/tables/loans";
     }
@@ -55,11 +60,12 @@ public class LoansController {
     public List<LoanProjection> filteredData(
             @RequestParam String columnFilter,
             @RequestParam String patternName,
-            @RequestParam Double patternRate,
-            @RequestParam Double patternTerm
+            @RequestParam Float patternRate,
+            @RequestParam Integer patternDuration,
+            @RequestParam Long patternAmount
     ) {
         return loanService.findProjectionByStartWith(
-                patternName, patternRate, patternTerm, Sort.by(Sort.Direction.ASC, columnFilter)
+                patternName, patternDuration, patternRate, patternAmount, Sort.by(Sort.Direction.ASC, columnFilter)
         );
     }
 

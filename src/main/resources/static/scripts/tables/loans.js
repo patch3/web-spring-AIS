@@ -1,13 +1,18 @@
 const columnSelector = document.getElementById("columnSelector");
 
 const filterInputName = document.getElementById("filterInputName")
-const filterInputRate = document.getElementById("filterInputRate")
-const filterInputTern = document.getElementById("filterInputTern")
+const filterInputDescription = document.getElementById("filterInputDescription")
+const filterInputInterestRate = document.getElementById("filterInputInterestRate")
+const filterInputDuration = document.getElementById("filterInputDuration")
+const filterInputAmount = document.getElementById("filterInputAmount")
 
 columnSelector.addEventListener("change", updateTableEvent)
 filterInputName.addEventListener("filterInputName", updateTableEvent)
-filterInputRate.addEventListener("filterInputRate", updateTableEvent)
-filterInputTern.addEventListener("filterInputTern", updateTableEvent)
+filterInputDescription.addEventListener("filterInputDescription", updateTableEvent)
+filterInputInterestRate.addEventListener("filterInputInterestRate", updateTableEvent)
+filterInputDuration.addEventListener("filterInputDuration", updateTableEvent)
+filterInputAmount.addEventListener("filterInputAmount", updateTableEvent)
+
 
 
 function updateTableEvent() {
@@ -17,8 +22,9 @@ function updateTableEvent() {
         data: {
             columnFilter: columnSelector.value,
             patternName: filterInputName.value,
-            patternRate: filterInputRate.value,
-            patternTerm: filterInputTern.value,
+            patternInterestRate: filterInputInterestRate.value,
+            patternDuration: filterInputDuration.value,
+            patternAmount: filterInputAmount.value
         },
         success: function (data) {
             $("#search-result-table tbody tr").empty();
@@ -27,9 +33,10 @@ function updateTableEvent() {
                 $('#search-result-table > tbody:last-child').append(
                     `<tr>
                         <th scope="row">${row.name}</th>
+                        <td>${row.description}</td>
                         <td>${row.interestRate}</td>
-                        <td>${row.interestRate}</td>
-                        <td>${row.loanTerm}</td>
+                        <td>${row.duration}</td>
+                        <td>${row.amount}</td>
                         <td><a href='/client/loans/${row.id}'>go to the info....</a></td>
                     </tr>`
                 );

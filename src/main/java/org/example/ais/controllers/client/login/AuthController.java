@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
     @GetMapping
     public String authClientPage(
-            @RequestParam(name = "error", required = false, defaultValue = "false") boolean error,
+            @RequestParam(name = "error", required = false) String error,
             Model model
     ) {
         model.addAttribute("namePage", "auth client");
-        if (error)
+        if (error != null)
             model.addAttribute("errorMessage", "authorization failed");
         return "/client/login/auth";
     }

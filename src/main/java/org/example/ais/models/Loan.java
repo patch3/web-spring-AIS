@@ -24,14 +24,21 @@ public class Loan implements IModel, LoanProjection {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
+
+    @Column(name = "duration_in_months", nullable = false)
+    private Integer durationInMonths;
+
     @Column(name = "interest_rate", nullable = false)
-    private Double interestRate;
-    @Column(name = "term", nullable = false)
-    private Double term;
+    private Float interestRate;
+
+    @Column(name = "amount", nullable = false)
+    private Double amount;
 
 
     @JsonIgnore
@@ -39,21 +46,46 @@ public class Loan implements IModel, LoanProjection {
     private Set<LoanRequestHistory> loanRequestHistories;
 
 
-    public Loan(String name, String description, Double interestRate, Double term) {
+    public Loan(Long id,
+                String name,
+                String description,
+                Float interestRate,
+                Double amount,
+                Integer durationInMonths) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.interestRate = interestRate;
-        this.term = term;
+        this.amount = amount;
+        this.durationInMonths = durationInMonths;
     }
 
-    public Loan(String name, Double interestRate, Double term) {
+    public Loan(String name,
+                String description,
+                Float interestRate,
+                Double amount,
+                Integer durationInMonths) {
+        this.id = null;
         this.name = name;
+        this.description = description;
         this.interestRate = interestRate;
-        this.term = term;
+        this.amount = amount;
+        this.durationInMonths = durationInMonths;
+    }
+
+    public Loan(Loan loan) {
+        this.id = loan.getId();
+        this.name = loan.getName();
+        this.description = loan.getDescription();
+        this.interestRate = loan.getInterestRate();
+        this.amount = loan.getAmount();
+        this.durationInMonths = loan.getDurationInMonths();
+        this.loanRequestHistories = loan.getLoanRequestHistories();
     }
 
     @Override
     public String getDefaultColumnName() {
         return COLUMN_NAME;
     }
+
 }
