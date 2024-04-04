@@ -40,6 +40,11 @@
         </ul>
         <ul class="navbar-nav ml-auto right-nav">
             <li class="nav-item">
+                <a class="nav-link" th:href="@{/staff/tables/loans}">Loans</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto right-nav">
+            <li class="nav-item">
                 <a class="nav-link" th:href="@{/staff/profile}" th:text="${#authentication.principal.username}"></a>
             </li>
         </ul>
@@ -48,7 +53,7 @@
     <th:block sec:authorize="hasRole('ROLE_CLIENT')">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/client/loans">Credits</a>
+                <a class="nav-link" th:href="@{/client/tables/loans}">Credits</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto right-nav">

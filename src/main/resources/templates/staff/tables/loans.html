@@ -11,38 +11,56 @@
 <div class="content">
     <div class="form-group">
         <label for="columnSelector">Filter Input:</label>
+        <a href="/client/loans/export">export to exel.</a>
+
         <select class="form-control" id="columnSelector">
-            <option selected value="Name">Name</option>
+            <option selected value="name">Name</option>
+            <option value="description">description</option>
+            <option value="durationInMonths">durationInMonths</option>
             <option value="interestRate">InterestRate</option>
-            <option value="tern">Tern</option>
+            <option value="amount">Amount</option>
         </select>
     </div>
 
     <table class="table table-striped" id="search-result-table">
         <thead>
         <tr>
-            <th><input class="form-control" id="filterInputName" placeholder="filterName" type="text"/></th>
-            <th><input class="form-control" id="filterInputRate" placeholder="filterRate" type="text"/></th>
-            <th><input class="form-control" id="filterInputTern" placeholder="filterTern" type="text"/></th>
+            <th><input class="form-control" id="filterInputName" placeholder="Filter name" type="text"/></th>
+            <th><input class="form-control" id="filterInputDescription" placeholder="Filter description" type="text"/>
+            </th>
+            <th><input class="form-control" id="filterInputInterestRate" placeholder="Filter interest rate"
+                       type="text"/></th>
+            <th><input class="form-control" id="filterInputDuration" placeholder="Filter duration (in month)"
+                       type="text"/></th>
+            <th><input class="form-control" id="filterInputAmount" placeholder="Filter amount" type="text"/></th>
             <th></th>
         </tr>
         <tr>
             <th>Name load</th>
-            <th>Interest rate<br>(in thousands $)</th>
-            <th>Tern (months)</th>
+            <th>Description</th>
+            <th>Interest rate<br>(in percentages)</th>
+            <th>Duration<br>(months)</th>
+            <th>Amount</th>
             <th>Info</th>
         </tr>
         </thead>
         <tbody>
         <tr id="tableBody" th:each="loan : ${loans}">
             <td th:text="${loan.name}"></td>
-            <td th:text="${loan.interestRate}"></td>
-            <td th:text="${loan.loanTerm}"></td>
-            <td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>
+            <td th:text="${loan.description}"></td>
+            <td th:text="${loan.interestRate} +'%'"></td>
+            <td th:text="${loan.durationInMonths}+' months'"></td>
+            <td th:text="${loan.getAmount} + '$'"></td>
+            <td><a th:href="@{'/staff/table/loans/'+${loan.id}}">go to the info...</a></td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<script defer="defer" th:src="@{/scripts/lib/jquery-3.7.1.js}"></script>
+<script defer="defer" th:src="@{/scripts/security-request.js}"></script>
+<script defer="defer" th:src="@{/scripts/utils/table-util.js}"></script>
+<script defer="defer" th:src="@{/scripts/tables/loans.js}"></script>
 
 </body>
 </html>

@@ -7,11 +7,11 @@ const filterInputDuration = document.getElementById("filterInputDuration")
 const filterInputAmount = document.getElementById("filterInputAmount")
 
 columnSelector.addEventListener("change", updateTableEvent)
-filterInputName.addEventListener("filterInputName", updateTableEvent)
-filterInputDescription.addEventListener("filterInputDescription", updateTableEvent)
-filterInputInterestRate.addEventListener("filterInputInterestRate", updateTableEvent)
-filterInputDuration.addEventListener("filterInputDuration", updateTableEvent)
-filterInputAmount.addEventListener("filterInputAmount", updateTableEvent)
+filterInputName.addEventListener("input", updateTableEvent)
+filterInputDescription.addEventListener("input", updateTableEvent)
+filterInputInterestRate.addEventListener("input", updateTableEvent)
+filterInputDuration.addEventListener("input", updateTableEvent)
+filterInputAmount.addEventListener("input", updateTableEvent)
 
 
 
@@ -22,7 +22,7 @@ function updateTableEvent() {
         data: {
             columnFilter: columnSelector.value,
             patternName: filterInputName.value,
-            patternInterestRate: filterInputInterestRate.value,
+            patternRate: filterInputInterestRate.value,
             patternDuration: filterInputDuration.value,
             patternAmount: filterInputAmount.value
         },

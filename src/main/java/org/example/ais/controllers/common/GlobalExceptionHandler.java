@@ -1,4 +1,4 @@
-package org.example.ais.controllers.advice;
+package org.example.ais.controllers.common;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -40,7 +40,7 @@ public class LoansControllerTest {
         List<Loan> loans = List.of(new Loan(0L, "test", "test", 0.f, 0.d, 0));
         when(loanService.findAll()).thenReturn(loans);
 
-        String viewName = loansController.loansPage(model);
+        String viewName = loansController.initializeBasePage(null, model);
 
         assertEquals(viewName, "/client/tables/loans");
 
@@ -73,9 +73,7 @@ public class LoansControllerTest {
     @Test
     public void testRemoveEntry() {
         Long id = 1L;
-
         loansController.removeEntry(id);
-
         verify(loanService).delete(id);
     }
 

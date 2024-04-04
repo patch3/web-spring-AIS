@@ -1,9 +1,7 @@
-package org.example.ais.controllers.client.tables;
+package org.example.ais.controllers.common.tables;
 
-import org.example.ais.controllers.common.tables.BaseLoansController;
 import org.example.ais.projections.LoanProjection;
 import org.example.ais.services.LoanService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
@@ -11,38 +9,23 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/client/tables/loans")
-public class LoansController extends BaseLoansController {
-    @Autowired
-    public LoansController(LoanService loanService) {
-        super(loanService);
+public abstract class BaseLoansController implements InitializeBasePage {
+
+    protected final LoanService loanService;
+
+    public BaseLoansController(LoanService loanService) {
+        this.loanService = loanService;
     }
 
-    @Override
-    @GetMapping
-    public String initializeBasePage(String error, Model model) {
-        model.addAttribute("loans", loanService.findAll());
-        return super.initializeBasePage(error, model);
-    }
-
-    @Override
-    public String getStaticPathToBasePage() {
-        return "client/tables/loans";
-    }
-
-
-
-   /* public static ResponseEntity<Resource> getResourceResponseEntity(LoanService loanService) throws IOException {
+    public static ResponseEntity<Resource> getResourceResponseEntity(LoanService loanService) throws IOException {
         byte[] data = loanService.exportToExcel();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=data.xlsx");
@@ -56,13 +39,6 @@ public class LoansController extends BaseLoansController {
                 .body(resource);
     }
 
-    @GetMapping
-    public String initializeBasePage(@RequestParam(value = "error", required = false) String error, Model model) {
-        model.addAttribute("loans", loanService.findAll());
-        return "/client/tables/loans";
-    }
-
-    @RequestMapping
     @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LoanProjection> filteredData(
             @RequestParam String columnFilter,
@@ -84,5 +60,5 @@ public class LoansController extends BaseLoansController {
     @GetMapping("/export")
     public ResponseEntity<Resource> export() throws IOException {
         return getResourceResponseEntity(loanService);
-    }*/
+    }
 }

@@ -12,6 +12,7 @@
     <div class="form-group">
         <label for="columnSelector">Filter Input:</label>
         <a href="/client/loans/export">export to exel.</a>
+
         <select class="form-control" id="columnSelector">
             <option selected value="name">Name</option>
             <option value="description">description</option>
@@ -44,7 +45,7 @@
         <tr id="tableBody" th:each="loan : ${loans}">
             <td th:text="${loan.name}"></td>
             <td th:text="${loan.description}"></td>
-            <td th:text="${loan.interestRate}+'%'"></td>
+            <td th:text="${loan.interestRate} +'%'"></td>
             <td th:text="${loan.durationInMonths}+' months'"></td>
             <td th:text="${loan.getAmount} + '$'"></td>
             <td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>
