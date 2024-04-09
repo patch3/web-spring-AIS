@@ -40,6 +40,40 @@ public class LoansController extends BaseLoansController {
         return "client/tables/loans";
     }
 
+    @GetMapping("/export")
+    public ResponseEntity<Resource> export() throws IOException {
+        return getResourceResponseEntity(loanService);
+    }
+
+    public static ResponseEntity<Resource> getResourceResponseEntity(LoanService loanService) throws IOException {
+        byte[] data = loanService.exportToExcel();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=data.xlsx");
+
+        Resource resource = new ByteArrayResource(data);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(data.length)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
+    }
+
+    @RequestMapping
+    @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<LoanProjection> filteredData(
+            @RequestParam String columnFilter,
+            @RequestParam String patternName,
+            @RequestParam Float patternRate,
+            @RequestParam Integer patternDuration,
+            @RequestParam Long patternAmount
+    ) {
+        return loanService.findProjectionByStartWith(
+                patternName, patternDuration, patternRate, patternAmount, Sort.by(Sort.Direction.ASC, columnFilter)
+        );
+    }
+
+
 
 
    /* public static ResponseEntity<Resource> getResourceResponseEntity(LoanService loanService) throws IOException {

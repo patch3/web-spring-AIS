@@ -38,7 +38,7 @@ public class Client implements IModel, ClientProjection {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "passport_photo", columnDefinition = "longblob", nullable = false)
+    @Column(name = "passport_photo", nullable = false)
     private byte[] passportPhoto;
 
     @Column(name = "password_hash", nullable = false)

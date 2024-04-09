@@ -41,6 +41,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
 
     @NonNull
+    @Transactional(readOnly = true)
     List<Client> findByConfirmedFalse(Sort sort);
 
     List<ClientProjection> findProjectionByFullNameStartingWithAndEmailStartingWithAndConfirmedFalse(

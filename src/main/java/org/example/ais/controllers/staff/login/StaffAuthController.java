@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/staff/login/auth")
 public final class StaffAuthController {
     @GetMapping
+
     public String authClientPage(
             @RequestParam(name = "error", required = false) String error,
             Model model
