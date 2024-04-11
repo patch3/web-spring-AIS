@@ -36,12 +36,25 @@
             <th></th>
         </tr>
         <tr>
+            <form>
+                <th><input class="form-control" name="name" placeholder="Filter name" type="text"/></th>
+                <th><input class="form-control" name="description" placeholder="Filter description" type="text"/>
+                </th>
+                <th><input class="form-control" name="durationInMonths" placeholder="Filter interest rate"
+                           type="text"/></th>
+                <th><input class="form-control" name="interestRate" placeholder="Filter duration (in month)"
+                           type="text"/></th>
+                <th><input class="form-control" name="amount" placeholder="Filter amount" type="text"/></th>
+                <th></th>
+            </form>
+        </tr>
+        <tr>
             <th>Name load</th>
             <th>Description</th>
             <th>Interest rate<br>(in percentages)</th>
             <th>Duration<br>(months)</th>
             <th>Amount</th>
-            <th>Info</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -51,7 +64,13 @@
             <td th:text="${loan.interestRate} +'%'"></td>
             <td th:text="${loan.durationInMonths}+' months'"></td>
             <td th:text="${loan.getAmount} + '$'"></td>
-            <td><a th:href="@{'/staff/table/loans/'+${loan.id}}">go to the info...</a></td>
+            <td>
+                <form th:action="@{'/staff/loans/remove'}" method="post">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <input type="hidden" name="loanId" th:value="${loan.id}" />
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

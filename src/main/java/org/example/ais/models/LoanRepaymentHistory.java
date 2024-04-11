@@ -1,3 +1,4 @@
+/*
 package org.example.ais.models;
 
 import jakarta.persistence.*;
@@ -8,10 +9,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.math.BigDecimal;
 import java.util.Date;
 
+*/
 /**
  * Модель таблицы
  * История выплат кредитов
- */
+ *//*
+
 
 
 @Data
@@ -39,3 +42,4 @@ public class LoanRepaymentHistory {
 
 
 }
+*/

@@ -37,7 +37,7 @@ public class LoansControllerTest {
 
     @Test
     public void testLoansPage() {
-        List<Loan> loans = List.of(new Loan(0L, "test", "test", 0.f, 0.d, 0));
+        List<Loan> loans = List.of(new Loan(0L, "test", "test", 0.f, 0L, 0));
         when(loanService.findAll()).thenReturn(loans);
 
         String viewName = loansController.initializeBasePage(null, model);
@@ -56,9 +56,9 @@ public class LoansControllerTest {
         Long patternAmount = null;
 
         List<LoanProjection> expected = List.of(
-                new Loan(0L, "test1", "test1", 0.f, 0.d, 0),
-                new Loan(1L, "test2", "test2", 0.f, 0.d, 0),
-                new Loan(2L, "test3", "test3", 0.f, 0.d, 0)
+                new Loan(0L, "test1", "test1", 0.f, 0L, 0),
+                new Loan(1L, "test2", "test2", 0.f, 0L, 0),
+                new Loan(2L, "test3", "test3", 0.f, 0L, 0)
         );
 
         when(loanService.findProjectionByStartWith(
@@ -70,12 +70,6 @@ public class LoansControllerTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    public void testRemoveEntry() {
-        Long id = 1L;
-        loansController.removeEntry(id);
-        verify(loanService).delete(id);
-    }
 
     @Test
     public void testExport() throws IOException {

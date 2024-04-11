@@ -40,8 +40,10 @@ public class LoanRequestHistory {
     @Column(name = "closed", nullable = false)
     private boolean closed;
 
+/*
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loanRequestHistory")
     private Set<LoanRepaymentHistory> loanRepaymentHistory;
+*/
 
     public LoanRequestHistory(Client client, Loan loan) {
         this.client = client;

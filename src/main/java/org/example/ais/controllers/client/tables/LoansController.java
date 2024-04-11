@@ -7,10 +7,8 @@ import org.example.ais.security.ClientDetails;
 import org.example.ais.services.LoanRequestHistoryService;
 import org.example.ais.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -45,11 +43,11 @@ public class LoansController extends BaseLoansController {
 
     @Override
     public String getStaticPathToBasePage() {
-        return "client/tables/loans";
+        return "/client/tables/loans";
     }
 
     @PostMapping(value = "/take-credit")
-    public String takeLoan(@RequestParam("loanId") Long loanId, Authentication authentication) {
+    public String takeLoan(@RequestParam Long loanId, Authentication authentication) {
         // Получаем дополнительные данные пользователя, если они есть
         val principal = authentication.getPrincipal();
         if (!(principal instanceof ClientDetails clientDetails)) {
@@ -66,19 +64,6 @@ public class LoansController extends BaseLoansController {
         return getResourceResponseEntity(loanService);
     }
 
-    public static ResponseEntity<Resource> getResourceResponseEntity(LoanService loanService) throws IOException {
-        byte[] data = loanService.exportToExcel();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=data.xlsx");
-
-        Resource resource = new ByteArrayResource(data);
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(data.length)
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(resource);
-    }
 
     @RequestMapping
     @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -93,51 +78,4 @@ public class LoansController extends BaseLoansController {
                 patternName, patternDuration, patternRate, patternAmount, Sort.by(Sort.Direction.ASC, columnFilter)
         );
     }
-
-
-
-
-   /* public static ResponseEntity<Resource> getResourceResponseEntity(LoanService loanService) throws IOException {
-        byte[] data = loanService.exportToExcel();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=data.xlsx");
-
-        Resource resource = new ByteArrayResource(data);
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(data.length)
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(resource);
-    }
-
-    @GetMapping
-    public String initializeBasePage(@RequestParam(value = "error", required = false) String error, Model model) {
-        model.addAttribute("loans", loanService.findAll());
-        return "/client/tables/loans";
-    }
-
-    @RequestMapping
-    @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LoanProjection> filteredData(
-            @RequestParam String columnFilter,
-            @RequestParam String patternName,
-            @RequestParam Float patternRate,
-            @RequestParam Integer patternDuration,
-            @RequestParam Long patternAmount
-    ) {
-        return loanService.findProjectionByStartWith(
-                patternName, patternDuration, patternRate, patternAmount, Sort.by(Sort.Direction.ASC, columnFilter)
-        );
-    }
-
-    @PostMapping("/remove")
-    public void removeEntry(@RequestParam Long id) {
-        loanService.delete(id);
-    }
-
-    @GetMapping("/export")
-    public ResponseEntity<Resource> export() throws IOException {
-        return getResourceResponseEntity(loanService);
-    }*/
 }
