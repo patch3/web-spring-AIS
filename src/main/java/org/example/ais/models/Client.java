@@ -62,6 +62,7 @@ public class Client implements IModel, ClientProjection {
         this.passwordHash = passwordHash;
     }
 
+
     @Override
     public String getDefaultColumnName() {
         return COLUMN_NAME;

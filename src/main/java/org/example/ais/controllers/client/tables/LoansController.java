@@ -1,7 +1,10 @@
 package org.example.ais.controllers.client.tables;
 
+import lombok.val;
 import org.example.ais.controllers.common.tables.BaseLoansController;
 import org.example.ais.projections.LoanProjection;
+import org.example.ais.security.ClientDetails;
+import org.example.ais.services.LoanRequestHistoryService;
 import org.example.ais.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -10,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +25,15 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/client/tables/loans")
+@RequestMapping("/client/loans")
 public class LoansController extends BaseLoansController {
+
+    private final LoanRequestHistoryService loanRequestHistoryService;
+
     @Autowired
-    public LoansController(LoanService loanService) {
+    public LoansController(LoanService loanService, LoanRequestHistoryService loanRequestHistoryService) {
         super(loanService);
+        this.loanRequestHistoryService = loanRequestHistoryService;
     }
 
     @Override
@@ -39,6 +47,19 @@ public class LoansController extends BaseLoansController {
     public String getStaticPathToBasePage() {
         return "client/tables/loans";
     }
+
+    @PostMapping(value = "/take-credit")
+    public String takeLoan(@RequestParam("loanId") Long loanId, Authentication authentication) {
+        // Получаем дополнительные данные пользователя, если они есть
+        val principal = authentication.getPrincipal();
+        if (!(principal instanceof ClientDetails clientDetails)) {
+            return "redirect:/client/tables/loans?error";
+        }
+        val loan = loanService.findById(loanId);
+        loanRequestHistoryService.recordLoanRequest(loan, clientDetails.client());
+        return "redirect:/client/tables/loans";
+    }
+
 
     @GetMapping("/export")
     public ResponseEntity<Resource> export() throws IOException {

@@ -38,7 +38,7 @@ public class Loan implements IModel, LoanProjection {
     private Float interestRate;
 
     @Column(name = "amount", nullable = false)
-    private Double amount;
+    private Long amount;
 
 
     @JsonIgnore
@@ -50,7 +50,7 @@ public class Loan implements IModel, LoanProjection {
                 String name,
                 String description,
                 Float interestRate,
-                Double amount,
+                Long amount,
                 Integer durationInMonths) {
         this.id = id;
         this.name = name;
@@ -63,7 +63,7 @@ public class Loan implements IModel, LoanProjection {
     public Loan(String name,
                 String description,
                 Float interestRate,
-                Double amount,
+                Long amount,
                 Integer durationInMonths) {
         this.id = null;
         this.name = name;

@@ -48,7 +48,14 @@
             <td th:text="${loan.interestRate} +'%'"></td>
             <td th:text="${loan.durationInMonths}+' months'"></td>
             <td th:text="${loan.getAmount} + '$'"></td>
-            <td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>
+            <!--<td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>-->
+            <td>
+                <form th:action="@{'/client/loan/take-credit'}" method="post">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <input type="hidden" name="creditId" th:value="${loan.id}" />
+                    <button type="submit">Взять кредит</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -7,4 +7,5 @@ import java.io.IOException;
 
 public interface ClientDetailService extends UserDetailsService {
     void save(ClientDTO clientDTO) throws IOException;
+
 }

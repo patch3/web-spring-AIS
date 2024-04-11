@@ -9,6 +9,7 @@ import org.example.ais.repositorys.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
+import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -18,7 +19,9 @@ import java.util.List;
 @Lazy
 @Service
 public class LoanService {
+
     private final static String PREFFIX = "Loan";
+
     private final LoanRepository loanRepository;
 
 
@@ -27,6 +30,9 @@ public class LoanService {
         this.loanRepository = loanRepository;
     }
 
+    public Loan findById(Long id) {
+        return loanRepository.findById(id).orElseThrow(() -> new ObjectRetrievalFailureException(Loan.class, id));
+    }
 
     public byte[] exportToExcel() throws IOException {
         Workbook workbook = new XSSFWorkbook();
@@ -100,7 +106,4 @@ public class LoanService {
                 patternName, patternDuration, patternInterestRate , patternAmount, sort
         );
     }
-
-
-
 }

@@ -9,7 +9,7 @@ public interface LoanProjection {
 
     Float getInterestRate();
 
-    Double getAmount();
+    Long getAmount();
 
     Integer getDurationInMonths();
 }

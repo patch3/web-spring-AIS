@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 /**
  * модель таблицы
- * История всех кредитов
+ * История запросов всех кредитов
  */
 @Data
 @NoArgsConstructor
@@ -33,9 +33,8 @@ public class LoanRequestHistory {
     @JoinColumn(name = "loans_id", nullable = false)
     private Loan loan;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "data", nullable = false)
-    private Date data;
+    private LocalDate data;
 
     @ColumnDefault("false")
     @Column(name = "closed", nullable = false)
@@ -44,4 +43,10 @@ public class LoanRequestHistory {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loanRequestHistory")
     private Set<LoanRepaymentHistory> loanRepaymentHistory;
 
+    public LoanRequestHistory(Client client, Loan loan) {
+        this.client = client;
+        this.loan = loan;
+        this.data = LocalDate.now();
+        this.closed = false;
+    }
 }

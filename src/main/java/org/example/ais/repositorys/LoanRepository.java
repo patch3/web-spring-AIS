@@ -8,6 +8,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
@@ -17,6 +18,8 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     List<LoanProjection>
     findProjectionByNameStartingWithAndDurationInMonthsStartingWithAndInterestRateStartingWithAndAmountStartingWith(
-            String patternName, Integer durationInMonths, Float interestRate, Long amount, Sort sort
+            String name, Integer durationInMonths, Float interestRate, Long amount, Sort sort
     );
+
+    Optional<Loan> findById(Long id);
 }

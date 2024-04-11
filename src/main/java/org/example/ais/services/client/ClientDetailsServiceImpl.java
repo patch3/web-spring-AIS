@@ -34,6 +34,7 @@ public final class ClientDetailsServiceImpl implements ClientDetailService {
         return new ClientDetails(client);
     }
 
+
     @Override
     public void save(ClientDTO clientDTO) throws IOException {
         clientRepository.save(
