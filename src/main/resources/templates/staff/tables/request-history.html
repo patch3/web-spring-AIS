@@ -10,22 +10,28 @@
 
 <div class="content">
     <table class="table table-striped" id="search-result-table">
-        <thead>
-            <tr>
-                <th>Name load</th>
-                <th>Interest rate<br>(in thousands $)</th>
-                <th>Tern (months)</th>
-                <th>Info</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr id="tableBody" th:each="loan : ${loans}">
-                <td th:text="${loan.name}"></td>
-                <td th:text="${loan.interestRate}"></td>
-                <td th:text="${loan.loanTerm}"></td>
-                <td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>
-            </tr>
-        </tbody>
+        <tr>
+            <th>Client</th>
+            <th>Loan</th>
+            <th>Date</th>
+            <th>Closed?</th>
+            <th>Action close</th>
+        </tr>
+        <tr th:each="loanRequest : ${loanHistory}">
+            <td th:text="${loanRequest.client.fullName}"></td>
+            <td th:text="${loanRequest.loan.name}"></td>
+            <td th:text="${loanRequest.data}"></td>
+            <td th:text="${loanRequest.closed}"></td>
+            <td>
+                <th:block th:unless="${loanRequest.closed}">
+                    <form th:action="@{'/staff/request-history/close'}" method="post">
+                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <input type="hidden" name="id" th:value="${loanRequest.id}" />
+                        <button type="submit"  class="btn btn-secondary">Close</button>
+                    </form>
+                </th:block>
+            </td>
+        </tr>
     </table>
 </div>
 </body>

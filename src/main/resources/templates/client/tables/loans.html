@@ -27,16 +27,16 @@
         <tr>
             <th><input class="form-control" id="filterInputName" placeholder="Filter name" type="text"/></th>
             <th><input class="form-control" id="filterInputDescription" placeholder="Filter description" type="text"/></th>
-            <th><input class="form-control" id="filterInputInterestRate" placeholder="Filter interest rate" type="text"/></th>
-            <th><input class="form-control" id="filterInputDuration" placeholder="Filter duration (in month)" type="text"/></th>
-            <th><input class="form-control" id="filterInputAmount" placeholder="Filter amount" type="text"/></th>
+            <th><input class="form-control" id="filterInputDuration" placeholder="Filter duration (in month)" type="text" pattern="^\d+$"/></th>
+            <th><input class="form-control" id="filterInputInterestRate" placeholder="Filter interest rate" type="text" pattern="^\d+(\.\d+)?$"/></th>
+            <th><input class="form-control" id="filterInputAmount" placeholder="Filter amount" type="text" pattern="^\d+$"/></th>
             <th></th>
         </tr>
         <tr>
             <th>Name load</th>
             <th>Description</th>
-            <th>Interest rate<br>(in percentages)</th>
             <th>Duration<br>(months)</th>
+            <th>Interest rate<br>(in percentages)</th>
             <th>Amount</th>
             <th>Take credit</th>
         </tr>
@@ -45,15 +45,15 @@
         <tr id="tableBody" th:each="loan : ${loans}">
             <td th:text="${loan.name}"></td>
             <td th:text="${loan.description}"></td>
-            <td th:text="${loan.interestRate} +'%'"></td>
             <td th:text="${loan.durationInMonths}+' months'"></td>
+            <td th:text="${loan.interestRate} +'%'"></td>
             <td th:text="${loan.getAmount} + '$'"></td>
             <!--<td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>-->
             <td>
                 <form th:action="@{'/client/loans/take-credit'}" method="post">
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <input type="hidden" name="loanId" th:value="${loan.id}" />
-                    <button type="submit">Взять кредит</button>
+                    <button type="submit" class="btn btn-secondary">Взять кредит</button>
                 </form>
             </td>
         </tr>

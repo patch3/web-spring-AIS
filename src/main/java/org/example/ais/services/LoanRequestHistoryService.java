@@ -23,4 +23,7 @@ public class LoanRequestHistoryService {
         this.loanRequestHistoryRepository.save(loanRequestHistory);
     }
 
+    public void closeById(Loan requestId) {
+
+    }
 }
