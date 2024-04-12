@@ -95,7 +95,7 @@ public class SecurityConfig {
                             (form) -> form
                                     .loginPage("/staff/login/auth")
                                     .loginProcessingUrl("/staff/login/auth/process")
-                                    .failureUrl("/staff/login/auth")
+                                    .failureUrl("/staff/login/auth?error")
                                     .defaultSuccessUrl("/staff/profile")
                     ).logout(
                             (logout) -> logout

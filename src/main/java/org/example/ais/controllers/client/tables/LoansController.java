@@ -48,13 +48,14 @@ public class LoansController extends BaseLoansController {
 
     @PostMapping(value = "/take-credit")
     public String takeLoan(@RequestParam Long loanId, Authentication authentication) {
-        // Получаем дополнительные данные пользователя, если они есть
         val principal = authentication.getPrincipal();
         if (!(principal instanceof ClientDetails clientDetails)) {
             return "redirect:/client/tables/loans?error";
         }
         val loan = loanService.findById(loanId);
-        loanRequestHistoryService.recordLoanRequest(loan, clientDetails.client());
+        if (!loanRequestHistoryService.recordLoanRequest(loan, clientDetails.client())) {
+            return "redirect:/client/tables/loans?error";
+        }
         return "redirect:/client/tables/loans";
     }
 

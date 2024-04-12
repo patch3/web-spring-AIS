@@ -18,12 +18,19 @@ public class LoanRequestHistoryService {
         this.loanRequestHistoryRepository = loanRequestHistoryRepository;
     }
 
-    public void recordLoanRequest(Loan loan, Client client) {
-        val loanRequestHistory = new LoanRequestHistory(client, loan);
-        this.loanRequestHistoryRepository.save(loanRequestHistory);
+    public boolean recordLoanRequest(Loan loan, Client client) {
+        if (!loanRequestHistoryRepository.existsByLoanAndClient(loan, client)) {
+            val loanRequestHistory = new LoanRequestHistory(client, loan);
+            this.loanRequestHistoryRepository.save(loanRequestHistory);
+            return true;
+        }
+        return false;
     }
 
-    public void closeById(Loan requestId) {
-
+    public void closeById(Long requestId) {
+        LoanRequestHistory loanRequestHistory = loanRequestHistoryRepository.findById(requestId)
+                .orElseThrow(() -> new IllegalStateException("Loan request not found."));
+        loanRequestHistory.setClosed(true);
+        loanRequestHistoryRepository.save(loanRequestHistory);
     }
 }

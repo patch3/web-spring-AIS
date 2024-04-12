@@ -37,13 +37,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="/staff/confirmation">Confirmation</a>
             </li>
-        </ul>
-        <ul class="navbar-nav ml-auto right-nav">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/staff/loans}">Loans</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/staff/request-history}">Request history</a>
+            </li>
         </ul>
-        <ul class="navbar-nav ml-auto right-nav">
+        <ul class="navbar-nav  right-nav">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/staff/profile}" th:text="${#authentication.principal.username}"></a>
             </li>

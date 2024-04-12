@@ -1,5 +1,6 @@
 package org.example.ais.repositorys;
 
+import org.example.ais.models.Client;
 import org.example.ais.models.Loan;
 import org.example.ais.projections.LoanProjection;
 import org.springframework.data.domain.Sort;

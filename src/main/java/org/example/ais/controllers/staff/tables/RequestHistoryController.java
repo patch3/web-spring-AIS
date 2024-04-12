@@ -24,10 +24,9 @@ public final class RequestHistoryController implements InitializeBasePage {
     @GetMapping
     public String initializeBasePage(String error, Model model) {
         model.addAttribute("namePage", "Request history");
+        model.addAttribute("", error);
         return InitializeBasePage.super.initializeBasePage(error, model);
     }
-
-
 
 
     @Override
