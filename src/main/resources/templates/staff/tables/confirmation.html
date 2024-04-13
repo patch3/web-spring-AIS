@@ -7,57 +7,6 @@
 <header th:replace="~{blocks/standart-sample :: header}"></header>
 <nav th:replace="~{blocks/standart-sample :: nav}"></nav>
 
-<!--<div class="content">
-    <div class="context-info">
-        <h2>Creditors</h2>
-    </div>
-
-    <label for="columnSelector"></label>
-    <select id="columnSelector" placeholder="Select filter">
-        <option value="fullName">Full name</option>
-        <option value="email">Email</option>
-    </select>
-
-    <table id="search-result-table">
-        <thead>
-            <tr>
-                <td><input id="filterInputFullName" type="text"/></td>
-                <td><input id="filterInputEmail" type="text"/></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Full name</th>
-                <th>Email</th>
-                <th>Password photo</th>
-                <th>accept</th>
-                <th>reject</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr id="tableBody" th:each="client : ${clients}">
-                <th scope="row" th:text="${client.fullName}"></th>
-                <td th:text="${client.email}"></td>
-                <td><a th:href="@{'/staff/img/passport/' + ${client.id}}">Go to the photo...</a></td>
-                <td>
-                    <form method="post" action="/staff/confirmation/accept">
-                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                        <input type="hidden" name="id" th:value="${client.id}"/>
-                        <input type="submit" value="accept"/>
-                    </form>
-                </td>
-                <td>
-                    <form method="post" action="/staff/confirmation/reject">
-                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                        <input type="hidden" name="id" th:value="${client.id}"/>
-                        <input type="submit" value="reject"/>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>-->
 
 <div class="content">
     <div class="context-info bg-primary text-white py-4">

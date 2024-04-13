@@ -6,6 +6,7 @@ import org.example.ais.projections.LoanProjection;
 import org.example.ais.services.LoanService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -44,7 +45,11 @@ public class LoansControllerTest {
 
         assertEquals(viewName, "/client/tables/loans");
 
-        verify(model).addAttribute("loans", loans);
+        ArgumentCaptor<List<Loan>> captor = ArgumentCaptor.forClass(List.class);
+        verify(model).addAttribute("loans", captor.capture());
+
+        List<Loan> capturedLoans = captor.getValue();
+        assertEquals(loans, capturedLoans);
     }
 
     @Test
