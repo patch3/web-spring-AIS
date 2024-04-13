@@ -51,4 +51,11 @@ public class LoanRequestHistory {
         this.data = LocalDate.now();
         this.closed = false;
     }
+
+    public String getInfo() {
+        return String.format(
+               "%s: %s;",
+                data.toString(), loan.toString()
+        );
+    }
 }

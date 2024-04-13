@@ -17,6 +17,13 @@
         </div>
     </th:block>
 
+    <th:block class="continueMessage" th:if="${successMessage}">
+        <div class="alert" role="alert">
+            <legend>Success:</legend>
+            <p th:text="${continueMessage}"></p>
+        </div>
+    </th:block>
+
     <div class="form-group">
         <label for="columnSelector">Filter Input:</label>
         <a href="/client/loans/export">export to exel.</a>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class ConfirmationController {
     }
 
     @PostMapping("/accept")
+    @Transactional(readOnly = true)
     public String acceptEntryClient(@RequestParam(name = "id") Long id) {
         clientRepository.confirmClientById(id);
         return "redirect:/staff/confirmation";
@@ -49,6 +51,7 @@ public class ConfirmationController {
     }
 
     @ResponseBody
+    @Transactional(readOnly = true)
     @PostMapping(value = "/filtered-data", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ClientProjection> filteredData(
             @RequestParam String columnFilter,

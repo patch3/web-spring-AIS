@@ -10,13 +10,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
 
 @Service
 @Lazy
-public final class ClientDetailsServiceImpl implements ClientDetailService {
+public class ClientDetailsServiceImpl implements ClientDetailService {
     private final ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
 

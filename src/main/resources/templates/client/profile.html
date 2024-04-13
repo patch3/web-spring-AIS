@@ -29,7 +29,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <!-- Добавьте здесь ссылки или другие элементы, если это необходимо -->
+            <ul class="list-group">
+                <li th:each="item : ${client.clientRequestHistory}" class="list-group-item" th:text="${item.getInfo()}"></li>
+            </ul>
         </div>
     </div>
 </div>

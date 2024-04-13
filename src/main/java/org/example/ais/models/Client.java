@@ -9,6 +9,7 @@ import org.example.ais.projections.ClientProjection;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -47,7 +48,7 @@ public class Client implements IModel, ClientProjection {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private Set<LoanRequestHistory> clientRequestHistory;
+    private List<LoanRequestHistory> clientRequestHistory;
 
     public Client(String fullName,
                   String email,

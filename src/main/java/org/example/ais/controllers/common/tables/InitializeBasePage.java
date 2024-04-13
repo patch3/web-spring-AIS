@@ -5,12 +5,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface InitializeBasePage {
     default String initializeBasePage(@RequestParam(value = "error", required = false) String error, Model model) {
-        if (error != null) {
-            model.addAttribute("errorMassage", error);
-        }
+        if (error != null)
+            model.addAttribute("errorMessage", getErrorMessage());
         return getStaticPathToBasePage();
     }
-
-    default String getErrorMessage(String error) { return "An unexpected error occurred"; }
+    default String getErrorMessage() { return "An unexpected error occurred"; }
     String getStaticPathToBasePage();
 }

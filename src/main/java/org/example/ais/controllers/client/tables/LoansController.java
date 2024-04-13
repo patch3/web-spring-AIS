@@ -3,6 +3,7 @@ package org.example.ais.controllers.client.tables;
 import lombok.val;
 import org.example.ais.controllers.common.tables.BaseLoansController;
 import org.example.ais.projections.LoanProjection;
+import org.example.ais.repositorys.ClientRepository;
 import org.example.ais.security.ClientDetails;
 import org.example.ais.services.LoanRequestHistoryService;
 import org.example.ais.services.LoanService;
@@ -28,16 +29,26 @@ public class LoansController extends BaseLoansController {
 
     private final LoanRequestHistoryService loanRequestHistoryService;
 
+    private final ClientRepository clientRepository;
+
+
     @Autowired
-    public LoansController(LoanService loanService, LoanRequestHistoryService loanRequestHistoryService) {
+    public LoansController(LoanService loanService, LoanRequestHistoryService loanRequestHistoryService, ClientRepository clientRepository) {
         super(loanService);
         this.loanRequestHistoryService = loanRequestHistoryService;
+        this.clientRepository = clientRepository;
     }
 
-    @Override
     @GetMapping
-    public String initializeBasePage(String error, Model model) {
+    public String initializeBasePage(
+            @RequestParam(name="error",   required = false) String error,
+            @RequestParam(name="success", required = false) String success,
+            Model model
+    ) {
         model.addAttribute("loans", loanService.findAll());
+        if (success != null)
+            model.addAttribute("successMessage", "error in obtaining a loan");
+
         return super.initializeBasePage(error, model);
     }
 
@@ -46,17 +57,23 @@ public class LoansController extends BaseLoansController {
         return "/client/tables/loans";
     }
 
+    @Override
+    public String getErrorMessage() {
+        return "Error: You have already taken out this loan";
+    }
+
     @PostMapping(value = "/take-credit")
     public String takeLoan(@RequestParam Long loanId, Authentication authentication) {
-        val principal = authentication.getPrincipal();
-        if (!(principal instanceof ClientDetails clientDetails)) {
-            return "redirect:/client/tables/loans?error";
+        val email = authentication.getName();
+        val clientOp = clientRepository.findByEmail(email);
+        if (clientOp.isEmpty()) {
+            return "redirect:/client/loans?error";
         }
         val loan = loanService.findById(loanId);
-        if (!loanRequestHistoryService.recordLoanRequest(loan, clientDetails.client())) {
-            return "redirect:/client/tables/loans?error";
+        if (!loanRequestHistoryService.recordLoanRequest(loan, clientOp.get())) {
+            return "redirect:/client/loans?error";
         }
-        return "redirect:/client/tables/loans";
+        return "redirect:/client/loans?success";
     }
 
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.example.ais.projections.LoanProjection;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -43,7 +44,7 @@ public class Loan implements IModel, LoanProjection {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "loan")
-    private Set<LoanRequestHistory> loanRequestHistories;
+    private List<LoanRequestHistory> loanRequestHistories;
 
 
     public Loan(Long id,
@@ -88,4 +89,11 @@ public class Loan implements IModel, LoanProjection {
         return COLUMN_NAME;
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+                "name: %s, amount: %d, interest rate: %.2f, duration: %d months",
+                this.name, this.amount, this.interestRate, this.durationInMonths
+        );
+    }
 }

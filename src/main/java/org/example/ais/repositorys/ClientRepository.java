@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
+    @Transactional(readOnly = true)
     Optional<Client> findByEmail(String email);
 
     @NonNull
@@ -24,12 +25,12 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @NonNull
     List<Client> findAll(@NonNull Sort sort);
 
+    @Transactional(readOnly = true)
     @Query("SELECT c.passportPhoto FROM Client c WHERE c.id = :id")
     Optional<byte[]> findPassportPhotoById(@Param("id") Long id);
 
 
     @Modifying
-    @Transactional
     @Query("UPDATE Client c SET c.confirmed = true WHERE c.id = :clientId")
     void confirmClientById(Long clientId);
 
@@ -43,6 +44,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @NonNull
     @Transactional(readOnly = true)
     List<Client> findByConfirmedFalse(Sort sort);
+
 
     List<ClientProjection> findProjectionByFullNameStartingWithAndEmailStartingWithAndConfirmedFalse(
             String patternFullName, String patternEmail, Sort sort

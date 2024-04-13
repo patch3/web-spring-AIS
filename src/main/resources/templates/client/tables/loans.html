@@ -9,6 +9,21 @@
 
 
 <div class="content">
+
+    <th:block class="errorMessage" th:if="${errorMessage}">
+        <div class="alert alert-danger" role="alert">
+            <legend>ERROR:</legend>
+            <p th:text="${errorMessage}"></p>
+        </div>
+    </th:block>
+
+    <th:block class="continueMessage" th:if="${successMessage}">
+        <div class="alert" role="alert">
+            <legend>Success:</legend>
+            <p th:text="${successMessage}"></p>
+        </div>
+    </th:block>
+
     <div class="form-group">
         <label for="columnSelector">Filter Input:</label>
         <a href="/client/loans/export">export to exel.</a>
@@ -48,12 +63,11 @@
             <td th:text="${loan.durationInMonths}+' months'"></td>
             <td th:text="${loan.interestRate} +'%'"></td>
             <td th:text="${loan.getAmount} + '$'"></td>
-            <!--<td><a th:href="@{'/client/loan/'+${loan.id}}">go to the info...</a></td>-->
             <td>
                 <form th:action="@{'/client/loans/take-credit'}" method="post">
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <input type="hidden" name="loanId" th:value="${loan.id}" />
-                    <button type="submit" class="btn btn-secondary">Взять кредит</button>
+                    <button type="submit" class="btn btn-secondary">Take a loan</button>
                 </form>
             </td>
         </tr>
